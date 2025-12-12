@@ -72,7 +72,7 @@ importers:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@19.2.2)(react@19.1.0)(redux@5.0.1)
       sonner:
-        specifier: ^2.0.7
+        specifier: 2.0.7
         version: 2.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       zod:
         specifier: ^4.1.13
@@ -419,7 +419,7 @@ importers:
         specifier: ^3.5.1
         version: 3.5.1(@types/react@19.2.2)(react-dom@19.1.0(react@19.2.0))(react-is@16.13.1)(react@19.2.0)(redux@5.0.1)
       sonner:
-        specifier: ^2.0.7
+        specifier: 2.0.7
         version: 2.0.7(react-dom@19.1.0(react@19.2.0))(react@19.2.0)
       tailwind-merge:
         specifier: ^3.4.0
