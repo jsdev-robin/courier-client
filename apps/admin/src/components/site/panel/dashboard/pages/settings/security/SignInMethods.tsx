@@ -20,7 +20,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
-import { Google } from "@repo/ui/icons/index";
+import {
+  Discord,
+  Github,
+  Google,
+  Facebook,
+  XformerlyTwitter,
+} from "@repo/ui/icons/index";
 import Link from "next/link";
 import { cn } from "@repo/ui/lib/utils";
 import useUser from "@/store/useUser";
@@ -31,7 +37,13 @@ import {
 } from "@repo/ui/utils/contants";
 import { useDisconnectOauthMutation } from "@/libs/features/services/auth/authApi";
 
-const oauthProviders = [{ name: "Google", key: "google", icon: <Google /> }];
+const oauthProviders = [
+  { name: "Google", key: "google", icon: <Google /> },
+  { name: "Github", key: "github", icon: <Github /> },
+  { name: "Facebook", key: "facebook", icon: <Facebook /> },
+  { name: "Discord", key: "discord", icon: <Discord /> },
+  { name: "Twitter", key: "twitter", icon: <XformerlyTwitter /> },
+];
 
 const SignInMethods = () => {
   const user = useUser();

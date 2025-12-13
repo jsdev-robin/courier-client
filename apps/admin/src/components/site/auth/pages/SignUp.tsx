@@ -28,46 +28,43 @@ import {
   FormLabel,
   FormMessage,
 } from "@repo/ui/components/form";
-import { Checkbox } from "@repo/ui/components/checkbox";
-import Link from "next/link";
 import { Spinner } from "@repo/ui/components/spinner";
 import { authSchema } from "@repo/ui/validations/authSchema";
 import OauthButtons from "./particles/OauthButtons";
-import { useSigninMutation } from "@/libs/features/services/auth/authApi";
+import { useSignupMutation } from "@/libs/features/services/auth/authApi";
 import { toast } from "sonner";
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
 } from "@repo/ui/utils/contants";
-import PasskeySignIn from "./particles/PasskeySignIn";
+import { useRouter } from "next/navigation";
 
-const SignIn = () => {
-  const [signin, { isLoading }] = useSigninMutation();
-  const form = useForm<z.infer<typeof authSchema.signin>>({
-    resolver: zodResolver(authSchema.signin),
+const SignUp = () => {
+  const router = useRouter();
+  const [signup, { isLoading }] = useSignupMutation();
+  const form = useForm<z.infer<typeof authSchema.signup>>({
+    resolver: zodResolver(authSchema.signup),
     mode: "onChange",
     defaultValues: {
+      familyName: "",
+      givenName: "",
       email: "",
       password: "Passw0rd!",
-      remember: false,
+      passwordConfirm: "Passw0rd!",
     },
   });
 
-  async function onSubmit(data: z.infer<typeof authSchema.signin>) {
+  async function onSubmit(data: z.infer<typeof authSchema.signup>) {
     await toast.promise(
-      signin(data)
+      signup(data)
         .unwrap()
-        .then((res) => res),
+        .then((res) => {
+          router.push("/sessions/verify");
+          return res;
+        }),
       {
-        loading: "Signing in...",
-        success: (res) => {
-          if (res.data.enable2fa) {
-            window.location.href = "/sessions/verify-2fa/app";
-          } else {
-            window.location.href = "/account/dashboard/overview";
-          }
-          return res?.message || DEFAULT_SUCCESS_MESSAGE;
-        },
+        loading: "Creating your account...",
+        success: (res) => res?.message || DEFAULT_SUCCESS_MESSAGE,
         error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
       },
     );
@@ -79,18 +76,53 @@ const SignIn = () => {
         <div className="flex flex-col gap-6 w-full">
           <Card>
             <CardHeader>
-              <CardTitle>Welcome back</CardTitle>
+              <CardTitle>Create an account</CardTitle>
               <CardDescription>
-                Securely access your account using Google or Passkey
-                authentication.
+                Enter your information below to create your account
               </CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-1 gap-7 w-full">
-              <PasskeySignIn />
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                   <FieldSet>
                     <FieldGroup>
+                      <Field className="grid grid-cols-5 gap-4">
+                        <OauthButtons />
+                      </Field>
+                      <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                        Or continue with
+                      </FieldSeparator>
+                      <Field>
+                        <FormField
+                          control={form.control}
+                          name="familyName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>First Name</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </Field>
+
+                      <Field>
+                        <FormField
+                          control={form.control}
+                          name="givenName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Last name</FormLabel>
+                              <FormControl>
+                                <Input {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </Field>
                       <Field>
                         <FormField
                           control={form.control}
@@ -120,49 +152,33 @@ const SignIn = () => {
                             </FormItem>
                           )}
                         />
-                        <div className="flex items-center">
-                          <FormField
-                            control={form.control}
-                            name="remember"
-                            render={({ field }) => (
-                              <FormItem className="flex items-center gap-3">
-                                <FormControl>
-                                  <Checkbox
-                                    id="remember"
-                                    checked={field.value}
-                                    onChange={field.onChange}
-                                  />
-                                </FormControl>
-                                <FormLabel htmlFor="remember">
-                                  Remember me
-                                </FormLabel>
-                              </FormItem>
-                            )}
-                          />
-                          <Link
-                            href="/forgot-password"
-                            className="ml-auto text-sm underline-offset-4 hover:underline"
-                          >
-                            Forgot your password?
-                          </Link>
-                        </div>
+                      </Field>
+                      <Field>
+                        <FormField
+                          control={form.control}
+                          name="passwordConfirm"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Confirm Password</FormLabel>
+                              <FormControl>
+                                <Input type="password" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </Field>
                       <Field>
                         <Button type="submit" disabled={isLoading}>
                           {isLoading && <Spinner />}
-                          Sing in
+                          Sign up
                         </Button>
                       </Field>
-                      <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                        Or continue with
-                      </FieldSeparator>
-                      <Field className="grid grid-cols-5 gap-4">
-                        <OauthButtons />
-                      </Field>
+
                       <Field>
                         <FieldDescription className="text-center">
                           Don&apos;t have an account?{" "}
-                          <a href="/sign-up">Sign up</a>
+                          <a href="/sign-in">Sign in</a>
                         </FieldDescription>
                       </Field>
                     </FieldGroup>
@@ -181,4 +197,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

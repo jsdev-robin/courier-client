@@ -2,10 +2,10 @@ import {
   AuthenticationResponseJSON,
   PublicKeyCredentialRequestOptionsJSON,
   type PublicKeyCredentialCreationOptionsJSON,
-} from "@simplewebauthn/browser";
-import { SuccessResponse } from "../../../types/api-response";
+} from '@simplewebauthn/browser';
+import { SuccessResponse } from '../../../types/api-response';
 
-export type Role = "passenger";
+export type Role = 'passenger';
 
 export interface Session {
   token: string;
@@ -33,6 +33,8 @@ export interface Session {
 }
 
 export interface User {
+  _id: string;
+  id: string;
   personalInfo: {
     familyName: string;
     givenName: string;
@@ -40,7 +42,7 @@ export interface User {
     email: string;
     phone?: string;
     dateOfBirth?: string;
-    gender?: "male" | "female" | "other";
+    gender?: 'male' | 'female' | 'other';
     nationality?: string;
     address?: string;
     avatar?: {
@@ -69,12 +71,12 @@ export interface User {
     };
     oauth: {
       provider:
-        | "google"
-        | "github"
-        | "twitter"
-        | "facebook"
-        | "discord"
-        | "linkedin";
+        | 'google'
+        | 'github'
+        | 'twitter'
+        | 'facebook'
+        | 'discord'
+        | 'linkedin';
       email: string;
     }[];
   };
@@ -98,6 +100,27 @@ export interface SessionsResponse extends SuccessResponse {
 export interface AuthState {
   token: string | null;
   user: User | null;
+}
+
+// Sign-up
+export interface SignupResponse extends SuccessResponse {
+  data: {
+    token: string;
+  };
+}
+
+export interface SingupRequest {
+  familyName: string;
+  givenName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+// Verify
+export interface VerifyRequest {
+  token: string;
+  otp: number;
 }
 
 // Sign-in
@@ -151,7 +174,7 @@ export interface SpyPasskeysResponse extends SuccessResponse {
       _id: string;
       device: string;
       browser: string;
-      formFactor: "desktop" | "mobile" | "tablet" | "tv";
+      formFactor: 'desktop' | 'mobile' | 'tablet' | 'tv';
       createdAt: string;
     }[];
   };

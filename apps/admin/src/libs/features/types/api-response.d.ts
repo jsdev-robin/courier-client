@@ -1,12 +1,12 @@
-import { PaginationState } from "@tanstack/react-table";
+import { PaginationState } from '@tanstack/react-table';
 
 export interface SuccessResponse {
-  status: "success";
+  status: 'success';
   message: string;
 }
 
 export interface PaginatedResponse<T> {
-  status: "success";
+  status: 'success';
   message: string;
   data: {
     data: T[];

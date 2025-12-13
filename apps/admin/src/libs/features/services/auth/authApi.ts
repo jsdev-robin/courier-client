@@ -1,6 +1,7 @@
-import { type RegistrationResponseJSON } from "@simplewebauthn/browser";
-import { apiSlice } from "../../api/api";
-import { SuccessResponse } from "../../types/api-response";
+import { type RegistrationResponseJSON } from '@simplewebauthn/browser';
+import { apiSlice } from '../../api/api';
+import { SuccessResponse } from '../../types/api-response';
+import { signup } from './authSlice';
 import {
   ChangePasswordRequest,
   DisconnectOauthRequest,
@@ -11,8 +12,10 @@ import {
   GetProfileResponse,
   RecoverBackupCodesResponse,
   SessionsResponse,
+  SignupResponse,
   SinginRequest,
   SinginResponse,
+  SingupRequest,
   SpyPasskeysResponse,
   Start2FASetupResponse,
   StartAuthenticationRequest,
@@ -22,70 +25,95 @@ import {
   StartRegistrationResponse,
   Verify2FAOnSignRequest,
   VerifyBackupCodeRequest,
-} from "./types";
+  VerifyRequest,
+} from './types';
 
 export const userAuthApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    signup: builder.mutation<SignupResponse, SingupRequest>({
+      query: (body) => ({
+        url: '/auth/admin/signup',
+        method: 'POST',
+        body,
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(signup({ token: data.data.token }));
+        } catch (error) {
+          console.log('Signup error:', error);
+        }
+      },
+    }),
+
+    verify: builder.mutation<SuccessResponse, VerifyRequest>({
+      query: ({ token, otp }) => ({
+        url: '/auth/admin/signup/verify',
+        method: 'POST',
+        body: { token, otp },
+      }),
+    }),
+
     signin: builder.mutation<SinginResponse, SinginRequest>({
       query: ({ email, password, remember }) => ({
-        url: "/auth/admin/signin",
-        method: "POST",
+        url: '/auth/admin/signin',
+        method: 'POST',
         body: { email, password, remember },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ['User'],
     }),
 
     signout: builder.mutation<SuccessResponse, void>({
       query: () => ({
-        url: "/auth/admin/signout",
-        method: "POST",
+        url: '/auth/admin/signout',
+        method: 'POST',
       }),
-      invalidatesTags: ["User", "Sessions"],
+      invalidatesTags: ['User', 'Sessions'],
     }),
 
     signoutSession: builder.mutation<SuccessResponse, string>({
       query: (token) => ({
         url: `/auth/admin/signout/${token}`,
-        method: "POST",
+        method: 'POST',
       }),
-      invalidatesTags: ["User", "Sessions"],
+      invalidatesTags: ['User', 'Sessions'],
     }),
 
     signoutAllSession: builder.mutation<SuccessResponse, void>({
       query: () => ({
-        url: "/auth/admin/signout-all",
-        method: "POST",
+        url: '/auth/admin/signout-all',
+        method: 'POST',
       }),
-      invalidatesTags: ["User", "Sessions"],
+      invalidatesTags: ['User', 'Sessions'],
     }),
 
     refreshToken: builder.mutation<SuccessResponse, void>({
       query: () => ({
-        url: "/auth/admin/refresh-token",
-        method: "POST",
+        url: '/auth/admin/refresh-token',
+        method: 'POST',
       }),
     }),
 
     getProfile: builder.query<GetProfileResponse, void>({
-      query: () => "/auth/admin/profile",
-      providesTags: ["User"],
+      query: () => '/auth/admin/profile',
+      providesTags: ['User'],
     }),
 
     updateProfile: builder.mutation<SessionsResponse, FormData>({
       query: (data) => ({
-        url: "/auth/admin/profile",
-        method: "PATCH",
+        url: '/auth/admin/profile',
+        method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ['User'],
     }),
 
     getSessions: builder.query<SessionsResponse, void>({
       query: () => ({
-        url: "/auth/admin/sessions",
-        method: "GET",
+        url: '/auth/admin/sessions',
+        method: 'GET',
       }),
-      providesTags: ["Sessions"],
+      providesTags: ['Sessions'],
     }),
 
     startPasskeysRegistration: builder.mutation<
@@ -93,10 +121,10 @@ export const userAuthApi = apiSlice.injectEndpoints({
       void
     >({
       query: () => ({
-        url: "/auth/admin/registration/start",
-        method: "POST",
+        url: '/auth/admin/registration/start',
+        method: 'POST',
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ['User'],
     }),
 
     finishPasskeysRegistration: builder.mutation<
@@ -106,11 +134,11 @@ export const userAuthApi = apiSlice.injectEndpoints({
       }
     >({
       query: ({ credential }) => ({
-        url: "/auth/admin/registration/finish",
-        method: "POST",
+        url: '/auth/admin/registration/finish',
+        method: 'POST',
         body: { credential },
       }),
-      invalidatesTags: ["User", "Passkeys"],
+      invalidatesTags: ['User', 'Passkeys'],
     }),
 
     startPasskeysAuthentication: builder.mutation<
@@ -118,8 +146,8 @@ export const userAuthApi = apiSlice.injectEndpoints({
       StartAuthenticationRequest
     >({
       query: ({ email }) => ({
-        url: "/auth/admin/authentication/start",
-        method: "POST",
+        url: '/auth/admin/authentication/start',
+        method: 'POST',
         body: { email },
       }),
     }),
@@ -129,26 +157,26 @@ export const userAuthApi = apiSlice.injectEndpoints({
       FinishPasskeysAuthenticationRequest
     >({
       query: ({ credential, email }) => ({
-        url: "/auth/admin/authentication/finish",
-        method: "POST",
+        url: '/auth/admin/authentication/finish',
+        method: 'POST',
         body: { credential, email },
       }),
     }),
 
     spyPasskeys: builder.query<SpyPasskeysResponse, void>({
       query: () => ({
-        url: "/auth/admin/passkeys",
-        method: "GET",
+        url: '/auth/admin/passkeys',
+        method: 'GET',
       }),
-      providesTags: ["Passkeys"],
+      providesTags: ['Passkeys'],
     }),
 
     unregisterPasskey: builder.mutation<void, string>({
       query: (id) => ({
         url: `/auth/admin/passkeys/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Passkeys", "User"],
+      invalidatesTags: ['Passkeys', 'User'],
     }),
 
     startPasswordReset: builder.mutation<
@@ -156,8 +184,8 @@ export const userAuthApi = apiSlice.injectEndpoints({
       StartPasswordResetRequest
     >({
       query: ({ email }) => ({
-        url: "/auth/admin/password/reset/start",
-        method: "POST",
+        url: '/auth/admin/password/reset/start',
+        method: 'POST',
         body: { email },
       }),
     }),
@@ -168,31 +196,31 @@ export const userAuthApi = apiSlice.injectEndpoints({
     >({
       query: ({ newPassword, confirmNewPassword, token }) => ({
         url: `/auth/admin/password/reset/finish/${token}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: { newPassword, confirmNewPassword },
       }),
     }),
 
     start2FASetup: builder.query<Start2FASetupResponse, void>({
       query: () => ({
-        url: "/auth/admin/2fa/setup/start",
-        method: "GET",
+        url: '/auth/admin/2fa/setup/start',
+        method: 'GET',
       }),
     }),
 
     finish2FASetup: builder.mutation<SinginResponse, Finish2FASetupRequest>({
       query: ({ totp, secret }) => ({
-        url: "/auth/admin/2fa/setup/finish",
-        method: "PATCH",
+        url: '/auth/admin/2fa/setup/finish',
+        method: 'PATCH',
         body: { totp, secret },
       }),
-      invalidatesTags: ["User", "BackupCodes"],
+      invalidatesTags: ['User', 'BackupCodes'],
     }),
 
     verify2FASignIn: builder.mutation<SuccessResponse, Verify2FAOnSignRequest>({
       query: ({ totp }) => ({
-        url: "/auth/admin/2fa/verify/app",
-        method: "POST",
+        url: '/auth/admin/2fa/verify/app',
+        method: 'POST',
         body: { totp },
       }),
     }),
@@ -200,9 +228,9 @@ export const userAuthApi = apiSlice.injectEndpoints({
     remove2fa: builder.mutation<SuccessResponse, void>({
       query: () => ({
         url: `/auth/admin/2fa/remove`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
-      invalidatesTags: ["User", "BackupCodes"],
+      invalidatesTags: ['User', 'BackupCodes'],
     }),
 
     verifyBackupCode: builder.mutation<
@@ -210,34 +238,34 @@ export const userAuthApi = apiSlice.injectEndpoints({
       VerifyBackupCodeRequest
     >({
       query: (data) => ({
-        url: "/auth/admin/2fa/verify/recovery",
-        method: "POST",
+        url: '/auth/admin/2fa/verify/recovery',
+        method: 'POST',
         body: data,
       }),
     }),
 
     recoverBackupCodes: builder.query<RecoverBackupCodesResponse, void>({
       query: () => ({
-        url: "/auth/admin/2fa/backup-codes/recover",
-        method: "GET",
+        url: '/auth/admin/2fa/backup-codes/recover',
+        method: 'GET',
       }),
 
-      providesTags: ["BackupCodes"],
+      providesTags: ['BackupCodes'],
     }),
 
     startBackupCodesSetup: builder.mutation<SuccessResponse, void>({
       query: () => ({
-        url: "/auth/admin/2fa/backup-codes/generate",
-        method: "POST",
+        url: '/auth/admin/2fa/backup-codes/generate',
+        method: 'POST',
       }),
-      invalidatesTags: ["BackupCodes"],
+      invalidatesTags: ['BackupCodes'],
     }),
 
     startEmailChange: builder.mutation<SinginResponse, StartEmailChangeRequest>(
       {
         query: ({ newEmail, confirmEmail, password }) => ({
-          url: "/auth/admin/email/change/start",
-          method: "POST",
+          url: '/auth/admin/email/change/start',
+          method: 'POST',
           body: { newEmail, confirmEmail, password },
         }),
       },
@@ -249,32 +277,34 @@ export const userAuthApi = apiSlice.injectEndpoints({
     >({
       query: ({ code, token }) => ({
         url: `/auth/admin/email/change/finish/${token}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: { code },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ['User'],
     }),
 
     changePassword: builder.mutation<SinginResponse, ChangePasswordRequest>({
       query: ({ currentPassword, newPassword, confirmNewPassword }) => ({
-        url: "/auth/admin/password/change",
-        method: "PATCH",
+        url: '/auth/admin/password/change',
+        method: 'PATCH',
         body: { currentPassword, newPassword, confirmNewPassword },
       }),
     }),
 
     disconnectOauth: builder.mutation<SinginResponse, DisconnectOauthRequest>({
       query: ({ email, provider }) => ({
-        url: "/auth/admin/disconnect/oauth",
-        method: "PATCH",
+        url: '/auth/admin/disconnect/oauth',
+        method: 'PATCH',
         body: { email, provider },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ['User'],
     }),
   }),
 });
 
 export const {
+  useSignupMutation,
+  useVerifyMutation,
   useSigninMutation,
   useSignoutMutation,
   useSignoutSessionMutation,

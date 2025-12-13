@@ -20,8 +20,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         } as React.CSSProperties
       }
     >
-      {/* <AppSidebar variant="inset" /> */}
-      <AppSidebar variant="sidebar" />
+      <AppSidebar />
       <SidebarInset className="overflow-hidden">
         <header className="border-b border-border flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
