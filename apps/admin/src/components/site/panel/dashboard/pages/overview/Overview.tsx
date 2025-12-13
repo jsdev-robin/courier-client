@@ -9,11 +9,11 @@ const Overview = () => {
       <div className="wrapper">
         <div className="space-y-4">
           <OverviewStats />
-          <div className="grid gap-4 grid-cols-3">
-            <div className="col-span-2">
+          <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+            <div className="lg:col-span-2">
               <UnassignedParcelList />
             </div>
-            <div className="col-span-1 h-full">
+            <div className="lg:col-span-1 h-full">
               <ParcelPaymentStatus />
             </div>
           </div>
