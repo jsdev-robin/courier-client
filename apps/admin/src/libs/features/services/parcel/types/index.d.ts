@@ -9,9 +9,15 @@ export interface FindGeoNearParcelResponse extends SuccessResponse {
         size: 'Small' | 'Medium' | 'Large';
         paymentType: 'COD' | 'Prepaid';
         agentName: string;
+        agentId: string;
         distance: number;
         distanceUnit: 'miles' | 'km';
       };
     }[];
   };
+}
+
+export interface FindOneAndUpdateAssignParcel {
+  parcelId: string;
+  agentId: string;
 }

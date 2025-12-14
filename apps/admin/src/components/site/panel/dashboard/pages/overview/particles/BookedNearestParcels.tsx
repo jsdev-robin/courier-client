@@ -2,7 +2,6 @@
 
 import { useFindGeoNearParcelQuery } from '@/libs/features/services/parcel/parcelApi';
 import { Badge } from '@repo/ui/components/badge';
-import { Button } from '@repo/ui/components/button';
 import Heading from '@repo/ui/components/heading';
 import {
   Item,
@@ -15,10 +14,23 @@ import {
 import { ScrollArea } from '@repo/ui/components/scroll-area';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { cn } from '@repo/ui/lib/utils';
-import { EllipsisIcon } from 'lucide-react';
+import { Dispatch, SetStateAction } from 'react';
+import ParcelAssignAction from './ParcelAssignAction';
 
-const BookedNearestParcels = () => {
+interface BookedNearestParcelsProps {
+  setId: Dispatch<SetStateAction<string | undefined>>;
+  id: string | undefined;
+}
+
+const BookedNearestParcels: React.FC<BookedNearestParcelsProps> = ({
+  id,
+  setId,
+}) => {
   const { data, isLoading, isError } = useFindGeoNearParcelQuery();
+
+  if (data?.data.parcels.length === 0) {
+    return <div>No Parcel found</div>;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-2 self-start">
@@ -35,7 +47,12 @@ const BookedNearestParcels = () => {
         ) : (
           <ItemGroup className="space-y-2 pr-4">
             {data?.data.parcels.map((item, i) => (
-              <Item variant="outline" key={i}>
+              <Item
+                variant="outline"
+                key={i}
+                onClick={() => setId(id ? '' : item._id)}
+                className={cn(id === item._id && 'bg-green-500/5')}
+              >
                 <ItemContent>
                   <ItemTitle>
                     {item.display.trackingNumber}
@@ -58,9 +75,10 @@ const BookedNearestParcels = () => {
                   </ItemDescription>
                 </ItemContent>
                 <ItemActions>
-                  <Button variant="outline" size="sm">
-                    <EllipsisIcon />
-                  </Button>
+                  <ParcelAssignAction
+                    agentId={item.display.agentId}
+                    parcelId={item._id}
+                  />
                 </ItemActions>
               </Item>
             ))}

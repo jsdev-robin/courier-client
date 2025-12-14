@@ -1,5 +1,9 @@
 import { apiSlice } from '../../api/api';
-import { FindGeoNearParcelResponse } from './types';
+import { SuccessResponse } from '../../types/api-response';
+import {
+  FindGeoNearParcelResponse,
+  FindOneAndUpdateAssignParcel,
+} from './types';
 
 export const parcelApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,7 +14,32 @@ export const parcelApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['ParcelsGeoNear'],
     }),
+
+    findOneAndUpdateAssignParcel: builder.mutation<
+      SuccessResponse,
+      FindOneAndUpdateAssignParcel
+    >({
+      query: ({ parcelId, agentId }) => ({
+        url: `/parcel/admin/${parcelId}/${agentId}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['ParcelsGeoNear'],
+    }),
+
+    findOneAndUpdateAssignAutoParcel: builder.mutation<SuccessResponse, string>(
+      {
+        query: (id) => ({
+          url: `/parcel/admin/${id}/auto`,
+          method: 'PATCH',
+        }),
+        invalidatesTags: ['ParcelsGeoNear'],
+      },
+    ),
   }),
 });
 
-export const { useFindGeoNearParcelQuery } = parcelApi;
+export const {
+  useFindGeoNearParcelQuery,
+  useFindOneAndUpdateAssignParcelMutation,
+  useFindOneAndUpdateAssignAutoParcelMutation,
+} = parcelApi;

@@ -15,14 +15,14 @@ const rawBaseQuery = fetchBaseQuery({
 });
 
 const SKIP_REFRESH_ENDPOINTS = [
-  '/auth/seller/signin',
-  '/auth/seller/verify-2fa',
-  '/auth/seller/signup',
-  '/auth/seller/verify',
-  '/auth/seller/forgot-password',
-  '/auth/seller/reset-password',
-  '/auth/seller/xxx',
-  '/auth/seller/2fa/verify/recovery',
+  '/auth/agent/signin',
+  '/auth/agent/verify-2fa',
+  '/auth/agent/signup',
+  '/auth/agent/verify',
+  '/auth/agent/forgot-password',
+  '/auth/agent/reset-password',
+  '/auth/agent/xxx',
+  '/auth/agent/2fa/verify/recovery',
 ];
 
 const MAX_RETRIES = 5;
@@ -48,7 +48,7 @@ const baseQueryWithReauth: BaseQueryFn<
         const release = await mutex.acquire();
         try {
           const refreshResult = await rawBaseQuery(
-            { url: '/auth/seller/refresh-token', method: 'POST' },
+            { url: '/auth/agent/refresh-token', method: 'POST' },
             api,
             extraOptions,
           );
@@ -89,18 +89,6 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: [
-    'User',
-    'Sessions',
-    'BackupCodes',
-    'Passkeys',
-    'Brands',
-    'PrimaryCategoryOptions',
-    'SecondaryCategoryOptions',
-    'TertiaryCategoryOptions',
-    'CategoryAttributes',
-    'Products',
-    'Product',
-  ],
+  tagTypes: ['User', 'Sessions', 'BackupCodes', 'Passkeys', 'AssignedParcel'],
   endpoints: () => ({}),
 });
