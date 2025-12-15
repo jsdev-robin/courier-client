@@ -1,6 +1,5 @@
 'use client';
 
-import { useFindDurationQuery } from '@/libs/features/services/navigation/navigationApi';
 import { useFindOneAndUpdateStatusParcelMutation } from '@/libs/features/services/parcel/parcelApi';
 import { paymentClass, PaymentType } from '@/utils/paymentClass';
 import { PaymentStatus, paymentStatusClass } from '@/utils/paymentStatusClass';
@@ -69,12 +68,12 @@ export const ParcelItem: React.FC<ParcelItemProps> = ({
 }) => {
   const [findOneAndUpdateStatusBytrackingNumberParcel, { isSuccess }] =
     useFindOneAndUpdateStatusParcelMutation();
-  const { data, isLoading, isError } = useFindDurationQuery(
-    { parcel, agent },
-    {
-      skip: !parcel || !agent,
-    },
-  );
+  // const { data, isLoading, isError } = useFindDurationQuery(
+  //   { parcel, agent },
+  //   {
+  //     skip: !parcel || !agent,
+  //   },
+  // );
 
   const handleStatus = (newStatus: string) => {
     toast.promise(
@@ -111,11 +110,11 @@ export const ParcelItem: React.FC<ParcelItemProps> = ({
           <span className="flex-col flex gap-2">
             <span className="inline">
               {deliveryAddress.street}, {deliveryAddress.state},{' '}
-              {isError
+              {/* {isError
                 ? null
                 : isLoading
                   ? 'Calculating...'
-                  : `${data?.data.distance}, ${data?.data.duration} away`}
+                  : `${data?.data.distance}, ${data?.data.duration} away`} */}
             </span>
             <span className="inline-flex items-center gap-2">
               <Badge
@@ -142,14 +141,7 @@ export const ParcelItem: React.FC<ParcelItemProps> = ({
       </ItemActions>
       <ItemFooter className="grid gap-4 md:grid-cols-3">
         <Link
-          href={{
-            pathname: `/account/dashboard/delivery/navigation/333`,
-            query: {
-              data: JSON.stringify({
-                parcel,
-              }),
-            },
-          }}
+          href={`/account/dashboard/delivery/navigation/${parcel.lat}/${parcel.lng}`}
           className={cn(buttonVariants({ variant: 'outline' }))}
         >
           <MapPin />
