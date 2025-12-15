@@ -9,39 +9,19 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.2.2",
-    "@reduxjs/toolkit": "2.11.1",
-    "@repo/ui": "workspace:*",
-    "@simplewebauthn/browser": "13.2.2",
-    "@tanstack/react-table": "8.21.3",
-    "async-mutex": "0.5.0",
-    "date-fns": "4.1.0",
-    "i18next": "^25.7.2",
-    "i18next-browser-languagedetector": "^8.2.0",
-    "i18next-http-backend": "^3.0.2",
-    "jose": "6.1.3",
-    "lucide-react": "0.560.0",
-    "next": "15.5.9",
-    "next-i18next": "^15.4.3",
-    "next-themes": "0.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-hook-form": "7.66.1",
-    "react-i18next": "^16.5.0",
-    "react-muntaha-uploader": "3.1.1",
-    "react-redux": "9.2.0",
-    "sonner": "2.0.7",
-    "zod": "4.1.13"
+    "next": "15.5.9"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
+    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.9",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@eslint/eslintrc": "^3"
   }
 }
