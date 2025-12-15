@@ -1,43 +1,55 @@
 'use client';
 
-import axios from 'axios';
+import { useAgentLocation } from '@/contexts/LocationContext';
+import { useFindNavigateQuery } from '@/libs/features/services/navigation/navigationApi';
+import {
+  Map,
+  MapLocateControl,
+  MapMarker,
+  MapTileLayer,
+  MapZoomControl,
+} from '@repo/ui/components/map';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useState } from 'react';
-import { MapContainer, Polyline, TileLayer } from 'react-leaflet';
+import { Car } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Polyline } from 'react-leaflet';
 
 const Navigate: React.FC = () => {
-  const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
-  const [center, setCenter] = useState<[number, number]>([23.85, 90.2]);
+  const { location } = useAgentLocation();
+  const searchParams = useSearchParams();
+  const parcel = searchParams.get('data');
+  const coords = parcel ? JSON.parse(parcel) : null;
+  const query = useFindNavigateQuery({
+    parcel: coords.parcel,
+    agent: {
+      lat: Number(location?.latitude),
+      lng: Number(location?.longitude),
+    },
+  });
 
-  useEffect(() => {
-    const fetchRoute = async () => {
-      const res = await axios.get('http://localhost:8005/agent/navigate');
-      const coords = res.data.data.features[0].geometry.coordinates.map(
-        ([lng, lat]: number[]) => [lat, lng] as [number, number],
-      );
-      setRouteCoords(coords);
-      if (coords.length > 0) setCenter(coords[0]);
-    };
-
-    fetchRoute();
-  }, []);
+  const data = query.data;
 
   return (
-    <div style={{ height: '500px', width: '100%' }}>
-      <MapContainer
-        center={center}
-        zoom={10}
-        style={{ height: '100%', width: '100%' }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap"
+    <Map center={[23.85, 90.2]} zoom={10} className="h-[80vh]">
+      <MapTileLayer
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      />
+      <MapZoomControl className="top-auto right-1 bottom-1 left-auto" />
+      <MapLocateControl className="top-1" />
+      {data && <Polyline positions={data.data.polyline} color="blue" />}
+      {data && data.data.polyline.length > 0 && (
+        <MapMarker
+          position={data.data.polyline[data.data.polyline.length - 1]}
         />
-        {routeCoords.length > 0 && (
-          <Polyline positions={routeCoords} color="blue" />
-        )}
-      </MapContainer>
-    </div>
+      )}
+      {data && data.data.polyline.length > 0 && (
+        <MapMarker
+          icon={<Car className="size-6 fill-blue-600 stroke-white" />}
+          position={data.data.polyline[0]}
+        />
+      )}
+    </Map>
   );
 };
 

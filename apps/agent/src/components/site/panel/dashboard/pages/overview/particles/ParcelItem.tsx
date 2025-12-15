@@ -1,7 +1,7 @@
 'use client';
 
 import { useFindDurationQuery } from '@/libs/features/services/navigation/navigationApi';
-import { useFindOneAndUpdateStatusBytrackingNumberParcelMutation } from '@/libs/features/services/parcel/parcelApi';
+import { useFindOneAndUpdateStatusParcelMutation } from '@/libs/features/services/parcel/parcelApi';
 import { paymentClass, PaymentType } from '@/utils/paymentClass';
 import { PaymentStatus, paymentStatusClass } from '@/utils/paymentStatusClass';
 import { ParcelSize, sizeClass } from '@/utils/sizeClass';
@@ -68,7 +68,7 @@ export const ParcelItem: React.FC<ParcelItemProps> = ({
   agent,
 }) => {
   const [findOneAndUpdateStatusBytrackingNumberParcel, { isSuccess }] =
-    useFindOneAndUpdateStatusBytrackingNumberParcelMutation();
+    useFindOneAndUpdateStatusParcelMutation();
   const { data, isLoading, isError } = useFindDurationQuery(
     { parcel, agent },
     {
@@ -142,7 +142,14 @@ export const ParcelItem: React.FC<ParcelItemProps> = ({
       </ItemActions>
       <ItemFooter className="grid gap-4 md:grid-cols-3">
         <Link
-          href={`/account/dashboard/delivery/navigation/333`}
+          href={{
+            pathname: `/account/dashboard/delivery/navigation/333`,
+            query: {
+              data: JSON.stringify({
+                parcel,
+              }),
+            },
+          }}
           className={cn(buttonVariants({ variant: 'outline' }))}
         >
           <MapPin />

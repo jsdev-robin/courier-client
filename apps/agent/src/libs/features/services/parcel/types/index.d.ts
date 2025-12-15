@@ -1,4 +1,4 @@
-export interface FindOneAndUpdateStatusBytrackingNumberRequest {
+export interface findOneAndUpdateStatusParcel {
   status: string;
   trackingNumber: string;
 }

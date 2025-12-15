@@ -7,6 +7,19 @@ export interface FindDurationResponse extends SuccessResponse {
   };
 }
 
+export interface FindNavigateResponse extends SuccessResponse {
+  data: {
+    polyline: [number, number][];
+    navigation: {
+      instruction: string;
+      distance: number;
+      duration: number;
+    }[];
+    distance: string;
+    duration: string;
+  };
+}
+
 export interface FindDurationRequest {
   parcel: {
     lat: number;

@@ -1,9 +1,6 @@
 import { apiSlice } from '../../api/api';
 import { SuccessResponse } from '../../types/api-response';
-import {
-  FindOneAndUpdateStatusBytrackingNumberRequest,
-  FindParcelResponse,
-} from './types';
+import { findOneAndUpdateStatusParcel, FindParcelResponse } from './types';
 
 export const parcelApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,9 +12,9 @@ export const parcelApi = apiSlice.injectEndpoints({
       providesTags: ['AssignedParcel'],
     }),
 
-    findOneAndUpdateStatusBytrackingNumberParcel: builder.mutation<
+    findOneAndUpdateStatusParcel: builder.mutation<
       SuccessResponse,
-      FindOneAndUpdateStatusBytrackingNumberRequest
+      findOneAndUpdateStatusParcel
     >({
       query: ({ trackingNumber, status }) => ({
         url: `/parcel/agent/${trackingNumber}/qr`,
@@ -29,7 +26,5 @@ export const parcelApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useFindParcelQuery,
-  useFindOneAndUpdateStatusBytrackingNumberParcelMutation,
-} = parcelApi;
+export const { useFindParcelQuery, useFindOneAndUpdateStatusParcelMutation } =
+  parcelApi;

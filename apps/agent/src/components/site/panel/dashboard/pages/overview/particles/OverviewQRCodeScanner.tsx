@@ -1,6 +1,6 @@
 'use client';
 
-import { useFindOneAndUpdateStatusBytrackingNumberParcelMutation } from '@/libs/features/services/parcel/parcelApi';
+import { useFindOneAndUpdateStatusParcelMutation } from '@/libs/features/services/parcel/parcelApi';
 import { Button } from '@repo/ui/components/button';
 import {
   Card,
@@ -31,7 +31,7 @@ const OverviewQRCodeScanner = () => {
   const [status, setStatus] = useState('');
   const [open, setOpen] = useState(false);
   const [findOneAndUpdateStatusBytrackingNumberParcel, { isLoading }] =
-    useFindOneAndUpdateStatusBytrackingNumberParcelMutation();
+    useFindOneAndUpdateStatusParcelMutation();
 
   useEffect(() => {
     if (scan && status) {

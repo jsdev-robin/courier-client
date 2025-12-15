@@ -1,11 +1,18 @@
 'use client';
 
 import { createSocket } from '@/libs/socket/socket';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import type { Socket } from 'socket.io-client';
+import { useRealTimeLocation } from '../hooks/useRealTimeLocation';
+
+interface AgentLocation {
+  latitude: number;
+  longitude: number;
+}
 
 interface LocationContextValue {
   socket: Socket;
+  location: AgentLocation | null;
 }
 
 const LocationContext = createContext<LocationContextValue | null>(null);
@@ -17,19 +24,21 @@ export const LocationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  // const { location } = useRealTimeLocation();
+  const { location } = useRealTimeLocation();
 
-  // useEffect(() => {
-  //   if (location) {
-  //     agentSocket.emit('agentLiveLocation', {
-  //       longitude: location.longitude,
-  //       latitude: location.latitude,
-  //     });
-  //   }
-  // }, [location]);
+  useEffect(() => {
+    if (location) {
+      agentSocket.emit('agentLiveLocation', {
+        longitude: location.longitude,
+        latitude: location.latitude,
+      });
+    }
+  }, [location]);
 
   return (
-    <LocationContext.Provider value={{ socket: agentSocket }}>
+    <LocationContext.Provider
+      value={{ socket: agentSocket, location: location }}
+    >
       {children}
     </LocationContext.Provider>
   );
