@@ -19,6 +19,10 @@ import {
 import { Clock, Truck } from 'lucide-react';
 
 import {
+  ParcelStatus as ParcelStatusType,
+  statusClass,
+} from '@/utils/statusClass';
+import {
   Stepper,
   StepperIndicator,
   StepperItem,
@@ -26,6 +30,7 @@ import {
   StepperSeparator,
   StepperTrigger,
 } from '@repo/ui/components/stepper';
+import { format, isToday } from 'date-fns';
 
 const steps = [
   {
@@ -45,17 +50,34 @@ const steps = [
   },
 ];
 
-const ParcelStatus = () => {
+interface ParcelStatusProps {
+  trackingNumber: string | undefined;
+  status: string | undefined;
+  updatedAt: string | undefined;
+}
+
+const ParcelStatus: React.FC<ParcelStatusProps> = ({
+  trackingNumber,
+  status,
+  updatedAt,
+}) => {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Parcel Status</CardTitle>
         <CardDescription>
-          <Badge>In Transit</Badge> Last updated: Today, 10:30 AM
+          <Badge className={statusClass[status as ParcelStatusType]}>
+            {status}
+          </Badge>{' '}
+          Last updated:{' '}
+          {updatedAt &&
+            (isToday(new Date(updatedAt))
+              ? `Today, ${format(new Date(updatedAt), 'hh:mm a')}`
+              : format(new Date(updatedAt), 'MMM dd, yyyy, hh:mm a'))}
         </CardDescription>
         <CardAction>
           <p className="text-xs text-muted-foreground">Tracking Number</p>
-          <h1 className="text-base font-medium">TRK-789456123</h1>
+          <h1 className="text-base font-medium">{trackingNumber}</h1>
         </CardAction>
       </CardHeader>
       <CardContent>

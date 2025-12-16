@@ -33,7 +33,7 @@ const ParcelInfo: React.FC<ParcelInfoProps> = ({
       </CardHeader>
       <CardContent>
         <ItemGroup>
-          <Item className="px-0" size="sm">
+          <Item className="px-0 pt-0" size="sm">
             <ItemContent>Size</ItemContent>
             <ItemActions className="font-semibold">
               {ParcelDetails?.size}
@@ -51,7 +51,7 @@ const ParcelInfo: React.FC<ParcelInfoProps> = ({
               {ParcelDetails?.type}
             </ItemActions>
           </Item>
-          <Item className="px-0" size="sm">
+          <Item className="px-0 pb-0" size="sm">
             <ItemContent>Description</ItemContent>
             <ItemActions className="font-semibold">
               {ParcelDetails?.description}

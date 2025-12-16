@@ -55,12 +55,15 @@ export interface ParcelTrackingHistory {
   notes?: string;
 }
 
-export interface ParcelAssignedAgent {
-  _id: string;
+export interface AssignedAgent {
   personalInfo: {
     familyName: string;
     givenName: string;
     email: string;
+    phone: string;
+    avatar: {
+      url: string;
+    };
   };
 }
 
@@ -76,7 +79,7 @@ export interface ParcelItem {
   parcelDetails: ParcelDetails;
   payment: ParcelPayment;
   trackingHistory: ParcelTrackingHistory[];
-  assignedAgent?: ParcelAssignedAgent;
+  assignedAgent?: AssignedAgent;
 }
 
 export interface CustomerPersonalInfo {
@@ -114,13 +117,7 @@ export interface FindOneParcelItem {
   parcelDetails: ParcelDetails;
   payment: ParcelPayment;
   trackingHistory: ParcelTrackingHistory[];
-  assignedAgent?: {
-    personalInfo: {
-      familyName: string;
-      givenName: string;
-      email: string;
-    };
-  };
+  assignedAgent?: AssignedAgent;
 }
 
 export interface FindParcelResponse extends SuccessResponse {

@@ -94,6 +94,8 @@ export const apiSlice = createApi({
     'Sessions',
     'BackupCodes',
     'Passkeys',
+    'Parcels',
+    'Parcel',
     'ParcelsGeoNear',
     'AvailableAgent',
     'PaymentTypeStats',

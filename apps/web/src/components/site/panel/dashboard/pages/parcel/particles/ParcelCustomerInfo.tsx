@@ -1,3 +1,4 @@
+import { ParcelCustomer } from '@/libs/features/services/parcel/types';
 import {
   Card,
   CardContent,
@@ -11,8 +12,15 @@ import {
   ItemGroup,
   ItemTitle,
 } from '@repo/ui/components/item';
+import React from 'react';
 
-const ParcelCustomerInfo = () => {
+interface ParcelCustomerInfoProps {
+  customer: ParcelCustomer | undefined;
+}
+
+const ParcelCustomerInfo: React.FC<ParcelCustomerInfoProps> = ({
+  customer,
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -20,28 +28,25 @@ const ParcelCustomerInfo = () => {
       </CardHeader>
       <CardContent>
         <ItemGroup>
-          <Item className="px-0" size="sm">
+          <Item className="px-0 pt-0" size="sm">
             <ItemContent>
               <ItemDescription>Customer</ItemDescription>
-              <ItemTitle>Michael Brown</ItemTitle>
+              <ItemTitle>
+                {customer?.personalInfo.familyName}{' '}
+                {customer?.personalInfo.givenName}
+              </ItemTitle>
             </ItemContent>
           </Item>
           <Item className="px-0" size="sm">
             <ItemContent>
               <ItemDescription>Email</ItemDescription>
-              <ItemTitle>michael.brown@example.com</ItemTitle>
+              <ItemTitle>{customer?.personalInfo.email}</ItemTitle>
             </ItemContent>
           </Item>
-          <Item className="px-0" size="sm">
+          <Item className="px-0 pb-0" size="sm">
             <ItemContent>
               <ItemDescription>Phone</ItemDescription>
-              <ItemTitle>+1 (555) 345-6789</ItemTitle>
-            </ItemContent>
-          </Item>
-          <Item className="px-0" size="sm">
-            <ItemContent>
-              <ItemDescription>Account Created</ItemDescription>
-              <ItemTitle>Jan 15, 2022</ItemTitle>
+              <ItemTitle>{customer?.personalInfo.phone}</ItemTitle>
             </ItemContent>
           </Item>
         </ItemGroup>

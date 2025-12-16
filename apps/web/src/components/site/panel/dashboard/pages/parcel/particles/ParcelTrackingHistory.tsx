@@ -1,5 +1,6 @@
 'use client';
 
+import type { ParcelTrackingHistory as ParcelTrackingHistoryType } from '@/libs/features/services/parcel/types';
 import {
   Card,
   CardContent,
@@ -17,32 +18,15 @@ import {
   TimelineTime,
   TimelineTitle,
 } from '@repo/ui/components/timeline';
+import { format, isToday } from 'date-fns';
 
-const timelineItems = [
-  {
-    id: 'project-kickoff',
-    dateTime: '2025-01-15',
-    date: 'January 15, 2025',
-    title: 'Project Kickoff',
-    description: 'Initial meeting to define scope.',
-  },
-  {
-    id: 'design-phase',
-    dateTime: '2025-02-01',
-    date: 'February 1, 2025',
-    title: 'Design Phase',
-    description: 'Created wireframes and mockups.',
-  },
-  {
-    id: 'development',
-    dateTime: '2025-03-01',
-    date: 'March 1, 2025',
-    title: 'Development',
-    description: 'Building core features.',
-  },
-];
+interface ParcelTrackingHistoryProps {
+  trackingHistory: ParcelTrackingHistoryType[] | undefined;
+}
 
-const ParcelTrackingHistory = () => {
+const ParcelTrackingHistory: React.FC<ParcelTrackingHistoryProps> = ({
+  trackingHistory,
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -50,18 +34,23 @@ const ParcelTrackingHistory = () => {
       </CardHeader>
       <CardContent>
         <Timeline activeIndex={1}>
-          {timelineItems.map((item) => (
-            <TimelineItem key={item.id}>
+          {trackingHistory?.map((item, i) => (
+            <TimelineItem key={i}>
               <TimelineDot />
               <TimelineConnector />
               <TimelineContent>
                 <TimelineHeader>
-                  <TimelineTime dateTime={item.dateTime}>
-                    {item.date}
+                  <TimelineTime dateTime={item.timestamp}>
+                    {isToday(new Date(item.timestamp))
+                      ? `Today, ${format(new Date(item.timestamp), 'hh:mm a')}`
+                      : format(
+                          new Date(item.timestamp),
+                          'MMM dd, yyyy, hh:mm a',
+                        )}
                   </TimelineTime>
-                  <TimelineTitle>{item.title}</TimelineTitle>
+                  <TimelineTitle>{item.status}</TimelineTitle>
                 </TimelineHeader>
-                <TimelineDescription>{item.description}</TimelineDescription>
+                <TimelineDescription>{item.notes}</TimelineDescription>
               </TimelineContent>
             </TimelineItem>
           ))}

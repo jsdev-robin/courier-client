@@ -16,17 +16,13 @@ import { TeamSwitcher } from './team-switcher';
 const data = {
   navMain: [
     {
-      title: 'Product',
+      title: 'Parcel',
       url: '#',
       icon: Box,
       items: [
         {
           title: 'List',
-          url: '/account/dashboard/product/list',
-        },
-        {
-          title: 'Create',
-          url: '/account/dashboard/product/create/v1',
+          url: '/account/dashboard/parcel/list',
         },
       ],
     },

@@ -1,4 +1,7 @@
-import { Badge } from '@repo/ui/components/badge';
+import {
+  ParcelCustomer,
+  ParcelDeliveryAddress,
+} from '@/libs/features/services/parcel/types';
 import {
   Card,
   CardContent,
@@ -13,8 +16,17 @@ import {
   ItemTitle,
 } from '@repo/ui/components/item';
 import { Flag, MapPin, Phone } from 'lucide-react';
+import React from 'react';
 
-const ParcelAddressDetails = () => {
+interface ParcelAddressDetailsProps {
+  deliveryAddress: ParcelDeliveryAddress | undefined;
+  customer: ParcelCustomer | undefined;
+}
+
+const ParcelAddressDetails: React.FC<ParcelAddressDetailsProps> = ({
+  deliveryAddress,
+  customer,
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -28,16 +40,21 @@ const ParcelAddressDetails = () => {
               <MapPin />
             </ItemMedia>
             <ItemContent>
-              <ItemTitle>John Smith</ItemTitle>
+              <ItemTitle>
+                {customer?.personalInfo.familyName}{' '}
+                {customer?.personalInfo.givenName}
+              </ItemTitle>
               <div className="space-y-2">
                 <address>
-                  123 Main Street New York, NY 10001 United States
+                  {customer?.personalInfo.address.street},
+                  {customer?.personalInfo.address.city},
+                  {customer?.personalInfo.address.state},
+                  {customer?.personalInfo.address.postalCode},
                 </address>
                 <div className="flex items-center gap-2">
                   <Phone className="size-4" />
-                  <p>+1 (555) 123-4567</p>
+                  <p>{customer?.personalInfo.phone}</p>
                 </div>
-                <Badge variant="secondary">Scheduled: Dec 20, 2023</Badge>
               </div>
             </ItemContent>
           </Item>
@@ -47,16 +64,16 @@ const ParcelAddressDetails = () => {
               <Flag />
             </ItemMedia>
             <ItemContent>
-              <ItemTitle>John Smith</ItemTitle>
+              <ItemTitle>{deliveryAddress?.contactName}</ItemTitle>
               <div className="space-y-2">
                 <address>
-                  123 Main Street New York, NY 10001 United States
+                  {deliveryAddress?.street},{deliveryAddress?.city},
+                  {deliveryAddress?.state},{deliveryAddress?.postalCode},
                 </address>
                 <div className="flex items-center gap-2">
                   <Phone className="size-4" />
-                  <p>+1 (555) 123-4567</p>
+                  <p>{deliveryAddress?.contactPhone}</p>
                 </div>
-                <Badge variant="secondary">Scheduled: Dec 20, 2023</Badge>
               </div>
             </ItemContent>
           </Item>

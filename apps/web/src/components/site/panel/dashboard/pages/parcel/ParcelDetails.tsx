@@ -13,18 +13,25 @@ const ParcelDetails = ({ id }: { id: string }) => {
     skip: !id,
   });
 
-  console.log(data);
-
   return (
     <section>
       <div className="container">
         <div className="grid gap-4 grid-cols-3">
           <div className="col-span-2">
             <div className="space-y-4">
-              <ParcelStatus />
+              <ParcelStatus
+                trackingNumber={data?.data.parcel.trackingNumber}
+                status={data?.data.parcel.status}
+                updatedAt={data?.data.parcel.updatedAt}
+              />
               <ParcelLiveTrackingMap />
-              <ParcelAddressDetails />
-              <ParcelTrackingHistory />
+              <ParcelAddressDetails
+                deliveryAddress={data?.data.parcel.deliveryAddress}
+                customer={data?.data.parcel.customer}
+              />
+              <ParcelTrackingHistory
+                trackingHistory={data?.data.parcel.trackingHistory}
+              />
             </div>
           </div>
           <div className="col-span-1">
@@ -34,9 +41,11 @@ const ParcelDetails = ({ id }: { id: string }) => {
                 qrCode={data?.data.parcel.qrCode}
                 barcode={data?.data.parcel.barcode}
               />
-              <ParcelPaymentInfo />
-              <ParcelAssignedAgent />
-              <ParcelCustomerInfo />
+              <ParcelPaymentInfo payment={data?.data.parcel.payment} />
+              <ParcelAssignedAgent
+                assignedAgent={data?.data.parcel.assignedAgent}
+              />
+              <ParcelCustomerInfo customer={data?.data.parcel.customer} />
             </div>
           </div>
         </div>
