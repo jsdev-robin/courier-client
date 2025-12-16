@@ -1,4 +1,4 @@
-export function formatFormData<T extends object>(
+export function obj2Form<T extends object>(
   obj: T,
   form?: FormData,
   parentKey?: string,
@@ -12,21 +12,21 @@ export function formatFormData<T extends object>(
     const formKey = parentKey ? `${parentKey}[${key}]` : key;
 
     if (value === null || value === undefined) {
-      formData.append(formKey, "");
+      formData.append(formKey, '');
     } else if (value instanceof File || value instanceof Blob) {
       formData.append(formKey, value);
     } else if (value instanceof Date) {
       formData.append(formKey, value.toISOString());
     } else if (Array.isArray(value)) {
       value.forEach((v, index) => {
-        if (typeof v === "object" && v !== null) {
-          formatFormData(v, formData, `${formKey}[${index}]`);
+        if (typeof v === 'object' && v !== null) {
+          obj2Form(v, formData, `${formKey}[${index}]`);
         } else {
           formData.append(`${formKey}[${index}]`, String(v));
         }
       });
-    } else if (typeof value === "object") {
-      formatFormData(value, formData, formKey);
+    } else if (typeof value === 'object') {
+      obj2Form(value, formData, formKey);
     } else {
       formData.append(formKey, String(value));
     }
