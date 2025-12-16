@@ -1,14 +1,13 @@
-import React from "react";
-import { Badge } from "@repo/ui/components/badge";
-import Heading from "@repo/ui/components/heading";
-import Typography from "@repo/ui/components/typography";
-import PasskeyFeatures from "./particles/PasskeyFeatures";
-import PasskeySetupCard from "./particles/PasskeySetupCard";
+import { Badge } from '@repo/ui/components/badge';
+import Heading from '@repo/ui/components/heading';
+import Typography from '@repo/ui/components/typography';
+import PasskeyFeatures from './particles/PasskeyFeatures';
+import PasskeySetupCard from './particles/PasskeySetupCard';
 
 const PasskeysSetupIntro = () => {
   return (
     <section>
-      <div className="wrapper">
+      <div className="container">
         <div className="space-y-6">
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <Badge className="bg-primary/10 text-primary border-primary/20">

@@ -1,9 +1,17 @@
-"use client";
+'use client';
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useStartEmailChangeMutation } from '@/libs/features/services/auth/authApi';
+import useUser from '@/store/useUser';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@repo/ui/components/breadcrumb';
+import { Button, buttonVariants } from '@repo/ui/components/button';
 import {
   Card,
   CardContent,
@@ -11,16 +19,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/card";
+} from '@repo/ui/components/card';
 import {
   Field,
   FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSet,
-} from "@repo/ui/components/field";
-import { Button, buttonVariants } from "@repo/ui/components/button";
-import { Input } from "@repo/ui/components/input";
+} from '@repo/ui/components/field';
 import {
   Form,
   FormControl,
@@ -29,38 +35,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/form";
-import { toast } from "sonner";
-import { Spinner } from "@repo/ui/components/spinner";
-import EmailSecurityHighlights from "./particles/EmailSecurityHighlights";
-import useUser from "@/store/useUser";
-import Link from "next/link";
-import { cn } from "@repo/ui/lib/utils";
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Spinner } from '@repo/ui/components/spinner';
+import { cn } from '@repo/ui/lib/utils';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import { authSchema } from "@repo/ui/validations/authSchema";
-import { useStartEmailChangeMutation } from "@/libs/features/services/auth/authApi";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@repo/ui/components/breadcrumb";
+} from '@repo/ui/utils/contants';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import EmailSecurityHighlights from './particles/EmailSecurityHighlights';
 
 const StartEmailChange = () => {
   const [startEmailChange, { isLoading }] = useStartEmailChangeMutation();
   const user = useUser();
   const form = useForm<z.infer<typeof authSchema.startEmailChange>>({
     resolver: zodResolver(authSchema.startEmailChange),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      newEmail: "",
-      confirmEmail: "",
-      password: "Passw0rd!",
+      newEmail: '',
+      confirmEmail: '',
+      password: 'Passw0rd!',
     },
   });
 
@@ -70,7 +69,7 @@ const StartEmailChange = () => {
         .unwrap()
         .then((res) => res),
       {
-        loading: "Sending verification email...",
+        loading: 'Sending verification email...',
         success: (res) => {
           form.reset();
           return res?.message || DEFAULT_SUCCESS_MESSAGE;
@@ -82,7 +81,7 @@ const StartEmailChange = () => {
 
   return (
     <section>
-      <div className="wrapper">
+      <div className="container">
         <div className="space-y-6">
           <Breadcrumb>
             <BreadcrumbList>
@@ -197,7 +196,7 @@ const StartEmailChange = () => {
                       <Link
                         href="/account/dashboard/settings"
                         className={cn(
-                          buttonVariants({ variant: "destructive" }),
+                          buttonVariants({ variant: 'destructive' }),
                         )}
                       >
                         Cancel

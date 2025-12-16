@@ -15,14 +15,14 @@ const rawBaseQuery = fetchBaseQuery({
 });
 
 const SKIP_REFRESH_ENDPOINTS = [
-  '/auth/agent/signin',
-  '/auth/agent/verify-2fa',
-  '/auth/agent/signup',
-  '/auth/agent/verify',
-  '/auth/agent/forgot-password',
-  '/auth/agent/reset-password',
-  '/auth/agent/xxx',
-  '/auth/agent/2fa/verify/recovery',
+  '/auth/user/signin',
+  '/auth/user/verify-2fa',
+  '/auth/user/signup',
+  '/auth/user/verify',
+  '/auth/user/forgot-password',
+  '/auth/user/reset-password',
+  '/auth/user/xxx',
+  '/auth/user/2fa/verify/recovery',
 ];
 
 const MAX_RETRIES = 5;
@@ -48,7 +48,7 @@ const baseQueryWithReauth: BaseQueryFn<
         const release = await mutex.acquire();
         try {
           const refreshResult = await rawBaseQuery(
-            { url: '/auth/agent/refresh-token', method: 'POST' },
+            { url: '/auth/user/refresh-token', method: 'POST' },
             api,
             extraOptions,
           );

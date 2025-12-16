@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useFinishEmailChangeMutation } from '@/libs/features/services/auth/authApi';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, buttonVariants } from '@repo/ui/components/button';
 import {
   Card,
   CardContent,
@@ -11,10 +10,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/card";
-import { Field, FieldGroup, FieldSet } from "@repo/ui/components/field";
-import { Button, buttonVariants } from "@repo/ui/components/button";
-import { Input } from "@repo/ui/components/input";
+} from '@repo/ui/components/card';
+import { Field, FieldGroup, FieldSet } from '@repo/ui/components/field';
 import {
   Form,
   FormControl,
@@ -23,25 +20,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/form";
-import { toast } from "sonner";
-import { Spinner } from "@repo/ui/components/spinner";
-import Link from "next/link";
-import { cn } from "@repo/ui/lib/utils";
-import { useFinishEmailChangeMutation } from "@/libs/features/services/auth/authApi";
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Spinner } from '@repo/ui/components/spinner';
+import { cn } from '@repo/ui/lib/utils';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import { authSchema } from "@repo/ui/validations/authSchema";
+} from '@repo/ui/utils/contants';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 const FinishEmailChange = ({ token }: { token: string }) => {
   const [finishEmailChange, { isLoading }] = useFinishEmailChangeMutation();
   const form = useForm<z.infer<typeof authSchema.finishEmailChange>>({
     resolver: zodResolver(authSchema.finishEmailChange),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      code: "",
+      code: '',
     },
   });
 
@@ -54,10 +53,10 @@ const FinishEmailChange = ({ token }: { token: string }) => {
         .unwrap()
         .then((res) => res),
       {
-        loading: "Updating your email...",
+        loading: 'Updating your email...',
         success: (res) => {
           form.reset();
-          window.location.href = "/account/dashboard/settings/emails";
+          window.location.href = '/account/dashboard/settings/emails';
           return res?.message || DEFAULT_SUCCESS_MESSAGE;
         },
         error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
@@ -116,7 +115,7 @@ const FinishEmailChange = ({ token }: { token: string }) => {
                 <CardFooter className="grid grid-cols-2 gap-4">
                   <Link
                     href="/account/dashboard/settings/emails"
-                    className={cn(buttonVariants({ variant: "destructive" }))}
+                    className={cn(buttonVariants({ variant: 'destructive' }))}
                   >
                     Cancel
                   </Link>

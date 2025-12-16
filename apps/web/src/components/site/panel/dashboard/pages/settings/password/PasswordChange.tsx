@@ -1,35 +1,7 @@
-"use client";
+'use client';
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@repo/ui/components/card";
-import { Field, FieldGroup, FieldSet } from "@repo/ui/components/field";
-import { Button } from "@repo/ui/components/button";
-import { Input } from "@repo/ui/components/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@repo/ui/components/form";
-import { toast } from "sonner";
-import {
-  DEFAULT_SERVER_ERROR_MESSAGE,
-  DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import { Spinner } from "@repo/ui/components/spinner";
-import { authSchema } from "@repo/ui/validations/authSchema";
-import { useChangePasswordMutation } from "@/libs/features/services/auth/authApi";
+import { useChangePasswordMutation } from '@/libs/features/services/auth/authApi';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -37,20 +9,47 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@repo/ui/components/breadcrumb";
-import Link from "next/link";
-import PasswordSecurityTips from "./particles/PasswordSecurityTips";
+} from '@repo/ui/components/breadcrumb';
+import { Button } from '@repo/ui/components/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
+import { Field, FieldGroup, FieldSet } from '@repo/ui/components/field';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Spinner } from '@repo/ui/components/spinner';
+import {
+  DEFAULT_SERVER_ERROR_MESSAGE,
+  DEFAULT_SUCCESS_MESSAGE,
+} from '@repo/ui/utils/contants';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import PasswordSecurityTips from './particles/PasswordSecurityTips';
 
 const PasswordChange = () => {
   const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const form = useForm<z.infer<typeof authSchema.changePassword>>({
     resolver: zodResolver(authSchema.changePassword),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
     },
   });
 
@@ -60,7 +59,7 @@ const PasswordChange = () => {
         .unwrap()
         .then((res) => res),
       {
-        loading: "Updating your password...",
+        loading: 'Updating your password...',
         success: (res) => {
           window.location.reload();
           return res?.message || DEFAULT_SUCCESS_MESSAGE;
@@ -72,7 +71,7 @@ const PasswordChange = () => {
 
   return (
     <section>
-      <div className="wrapper">
+      <div className="container">
         <div className="space-y-6">
           <Breadcrumb>
             <BreadcrumbList>

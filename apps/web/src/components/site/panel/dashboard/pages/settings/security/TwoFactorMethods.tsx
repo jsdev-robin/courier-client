@@ -1,6 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
+import { useRemove2faMutation } from '@/libs/features/services/auth/authApi';
+import useUser from '@/store/useUser';
+import { Badge } from '@repo/ui/components/badge';
+import { Button, buttonVariants } from '@repo/ui/components/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
 import {
   Item,
   ItemActions,
@@ -10,26 +20,15 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@repo/ui/components/item";
-import { MessageSquare, ShieldCheck, Smartphone } from "lucide-react";
-import { Button, buttonVariants } from "@repo/ui/components/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@repo/ui/components/card";
-import { Badge } from "@repo/ui/components/badge";
-import Link from "next/link";
-import { cn } from "@repo/ui/lib/utils";
-import useUser from "@/store/useUser";
-import { useRemove2faMutation } from "@/libs/features/services/auth/authApi";
-import { toast } from "sonner";
+} from '@repo/ui/components/item';
+import { cn } from '@repo/ui/lib/utils';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
+} from '@repo/ui/utils/contants';
+import { MessageSquare, ShieldCheck, Smartphone } from 'lucide-react';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 const TwoFactorMethods = () => {
   const user = useUser();
@@ -37,7 +36,7 @@ const TwoFactorMethods = () => {
 
   const handleRemove2FA = async () => {
     await toast.promise(remove2fa().unwrap(), {
-      loading: "Removing 2FA securely...",
+      loading: 'Removing 2FA securely...',
       success: (res) => res?.message || DEFAULT_SUCCESS_MESSAGE,
       error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
     });
@@ -45,7 +44,7 @@ const TwoFactorMethods = () => {
 
   return (
     <section>
-      <div className="wrapper">
+      <div className="container">
         <Card>
           <CardHeader>
             <CardTitle>Two-factor Authentication</CardTitle>
@@ -81,13 +80,13 @@ const TwoFactorMethods = () => {
                       size="sm"
                       onClick={handleRemove2FA}
                     >
-                      {isLoading ? "Removing..." : "Remove"}
+                      {isLoading ? 'Removing...' : 'Remove'}
                     </Button>
                   ) : (
                     <Link
                       href="/account/dashboard/settings/security/two-factor"
                       className={cn(
-                        buttonVariants({ size: "sm", variant: "outline" }),
+                        buttonVariants({ size: 'sm', variant: 'outline' }),
                       )}
                     >
                       Add
@@ -124,7 +123,7 @@ const TwoFactorMethods = () => {
                   <Link
                     href="/account/dashboard/settings/security/recovery-codes"
                     className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }),
+                      buttonVariants({ size: 'sm', variant: 'outline' }),
                     )}
                   >
                     View

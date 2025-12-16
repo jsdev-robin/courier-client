@@ -1,32 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import Heading from "@repo/ui/components/heading";
-import Typography from "@repo/ui/components/typography";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemGroup,
-  ItemMedia,
-  ItemTitle,
-} from "@repo/ui/components/item";
-import { CheckCircle2, Trash2 } from "lucide-react";
-import { Button, buttonVariants } from "@repo/ui/components/button";
-import { Badge } from "@repo/ui/components/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@repo/ui/components/card";
-import { format, formatDistanceToNow } from "date-fns";
 import {
   useSpyPasskeysQuery,
   useUnregisterPasskeyMutation,
-} from "@/libs/features/services/auth/authApi";
+} from '@/libs/features/services/auth/authApi';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,18 +14,40 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@repo/ui/components/alert-dialog";
+} from '@repo/ui/components/alert-dialog';
+import { Badge } from '@repo/ui/components/badge';
+import { Button, buttonVariants } from '@repo/ui/components/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
 import {
   Empty,
   EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from "@repo/ui/components/empty";
-import { toast } from "sonner";
-import { DEFAULT_SERVER_ERROR_MESSAGE } from "@repo/ui/utils/contants";
-import Link from "next/link";
-import { cn } from "@repo/ui/lib/utils";
+} from '@repo/ui/components/empty';
+import Heading from '@repo/ui/components/heading';
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from '@repo/ui/components/item';
+import Typography from '@repo/ui/components/typography';
+import { cn } from '@repo/ui/lib/utils';
+import { DEFAULT_SERVER_ERROR_MESSAGE } from '@repo/ui/utils/contants';
+import { format, formatDistanceToNow } from 'date-fns';
+import { CheckCircle2, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 const PasskeyDeviceManager = () => {
   const { data } = useSpyPasskeysQuery();
@@ -56,15 +55,15 @@ const PasskeyDeviceManager = () => {
 
   const handleUnregisterPasskey = async (id: string) => {
     await toast.promise(unregisterPasskey(id).unwrap(), {
-      loading: "Removing device securely...",
-      success: "Device removed successfully.",
+      loading: 'Removing device securely...',
+      success: 'Device removed successfully.',
       error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
     });
   };
 
   return (
     <section>
-      <div className="wrapper max-w-4xl">
+      <div className="container max-w-4xl">
         <div className="space-y-4">
           <div className="space-y-4">
             <Heading as="h5" className="font-bold text-balance">
@@ -98,7 +97,7 @@ const PasskeyDeviceManager = () => {
                     </ItemTitle>
                     <ItemDescription className="flex flex-col gap-1">
                       <span className="text-sm text-muted-foreground">
-                        Last used:{" "}
+                        Last used:{' '}
                         <span className="text-foreground">
                           {formatDistanceToNow(new Date(item.createdAt), {
                             addSuffix: true,
@@ -106,9 +105,9 @@ const PasskeyDeviceManager = () => {
                         </span>
                       </span>
                       <span className="text-sm text-muted-foreground">
-                        Registered:{" "}
+                        Registered:{' '}
                         <span className="text-foreground">
-                          {format(new Date(item.createdAt), "MMM d, yyyy")}
+                          {format(new Date(item.createdAt), 'MMM d, yyyy')}
                         </span>
                       </span>
                     </ItemDescription>
