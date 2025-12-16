@@ -1,3 +1,4 @@
+import { ParcelDetails } from '@/libs/features/services/parcel/types';
 import {
   Card,
   CardContent,
@@ -11,9 +12,20 @@ import {
   ItemContent,
   ItemGroup,
 } from '@repo/ui/components/item';
-import { Barcode, QrCode } from 'lucide-react';
+import Image from 'next/image';
+import React from 'react';
 
-const ParcelInfo = () => {
+interface ParcelInfoProps {
+  ParcelDetails?: ParcelDetails | undefined;
+  qrCode: string | undefined;
+  barcode: string | undefined;
+}
+
+const ParcelInfo: React.FC<ParcelInfoProps> = ({
+  ParcelDetails,
+  barcode,
+  qrCode,
+}) => {
   return (
     <Card>
       <CardHeader>
@@ -23,20 +35,26 @@ const ParcelInfo = () => {
         <ItemGroup>
           <Item className="px-0" size="sm">
             <ItemContent>Size</ItemContent>
-            <ItemActions className="font-semibold">Medium</ItemActions>
+            <ItemActions className="font-semibold">
+              {ParcelDetails?.size}
+            </ItemActions>
           </Item>
           <Item className="px-0" size="sm">
             <ItemContent>Weight</ItemContent>
-            <ItemActions className="font-semibold">2KG</ItemActions>
+            <ItemActions className="font-semibold">
+              {ParcelDetails?.weight}
+            </ItemActions>
           </Item>
           <Item className="px-0" size="sm">
             <ItemContent>Type</ItemContent>
-            <ItemActions className="font-semibold">Electronics</ItemActions>
+            <ItemActions className="font-semibold">
+              {ParcelDetails?.type}
+            </ItemActions>
           </Item>
           <Item className="px-0" size="sm">
             <ItemContent>Description</ItemContent>
             <ItemActions className="font-semibold">
-              Smartphone and accessories
+              {ParcelDetails?.description}
             </ItemActions>
           </Item>
         </ItemGroup>
@@ -44,8 +62,24 @@ const ParcelInfo = () => {
       <CardFooter className="flex-col gap-2 items-start">
         <CardTitle>Package Identification</CardTitle>
         <div className="flex items-center gap-4">
-          <Barcode className="size-20" />
-          <QrCode className="size-20" />
+          {barcode && (
+            <Image
+              src={barcode}
+              alt="Barcode"
+              width={100}
+              height={48}
+              className="w-full h-12"
+            />
+          )}
+          {qrCode && (
+            <Image
+              src={qrCode}
+              alt="qrCode"
+              width={80}
+              height={80}
+              className="size-20"
+            />
+          )}
         </div>
       </CardFooter>
     </Card>
