@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import debounce from 'lodash.debounce';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface Place {
   display_name: string;
@@ -34,32 +34,31 @@ export const usePlaceSearch = (delay = 500): UsePlaceSearch => {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchPlaces = async (q: string) => {
-    if (!q) {
-      setResults([]);
-      return;
-    }
-    setLoading(true);
-    try {
-      const { data } = await axios.get<Place[]>(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-          q,
-        )}&format=json&limit=20`,
-      );
-      setResults(data);
-    } catch {
-      setResults([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const debouncedFetch = useCallback(debounce(fetchPlaces, delay), [delay]);
+  const debouncedFetchRef = useRef(
+    debounce(async (q: string) => {
+      if (!q) {
+        setResults([]);
+        return;
+      }
+      setLoading(true);
+      try {
+        const { data } = await axios.get<Place[]>(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+            q,
+          )}&format=json&limit=20`,
+        );
+        setResults(data);
+      } catch {
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    }, delay),
+  );
 
   useEffect(() => {
-    debouncedFetch(query);
-    return () => debouncedFetch.cancel();
-  }, [query, debouncedFetch]);
+    debouncedFetchRef.current(query);
+  }, [query]);
 
   const selectPlace = (place: Place) => {
     setCoords({

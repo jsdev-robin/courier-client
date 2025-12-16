@@ -23,7 +23,6 @@ export const create = z.object({
     type: z.string().nonempty('Payment type is required'),
     amount: z.string().nonempty('Amount is required'),
     codAmount: z.string().optional(),
-    status: z.string().nonempty('Status is required'),
   }),
 });
 

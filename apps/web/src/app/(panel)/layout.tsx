@@ -1,13 +1,10 @@
-import Header from '@/components/site/panel/dashboard/layouts/Header';
-import React from 'react';
+'use client';
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <>
-      <Header />
-      <main className="py-4">{children}</main>
-    </>
-  );
+import React from 'react';
+import Loader from './loader';
+
+const AdminPanelLayout = ({ children }: { children: React.ReactNode }) => {
+  return <Loader>{children}</Loader>;
 };
 
-export default RootLayout;
+export default AdminPanelLayout;
