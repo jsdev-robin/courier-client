@@ -41,20 +41,17 @@ export interface User {
     displayName: string;
     email: string;
     phone?: string;
-    dateOfBirth?: string;
-    gender?: 'male' | 'female' | 'other';
-    nationality?: string;
-    address?: string;
-    avatar?: {
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      postalCode: string;
+      coordinates: [string, string];
+    };
+    avatar: {
+      public_id: string;
       url: string;
     };
-    socialLinks?: {
-      facebook?: string;
-      twitter?: string;
-      linkedin?: string;
-      instagram?: string;
-    };
-    emergencyContacts?: { name: string; phone: string; relation: string }[];
   };
   authentication: {
     password?: string;

@@ -33,15 +33,15 @@ const Profile = () => {
     defaultValues: {
       img: undefined,
       personalInfo: {
-        familyName: '',
-        givenName: '',
-        phone: '',
+        familyName: user?.personalInfo.familyName ?? '',
+        givenName: user?.personalInfo.givenName ?? '',
+        phone: user?.personalInfo.phone ?? '',
         address: {
-          street: '',
-          city: '',
-          state: '',
-          postalCode: '',
-          coordinates: [],
+          street: user?.personalInfo.address.street ?? '',
+          city: user?.personalInfo.address.city ?? '',
+          state: user?.personalInfo.address.state ?? '',
+          postalCode: user?.personalInfo.address.postalCode ?? '',
+          coordinates: user?.personalInfo.address.coordinates ?? [],
         },
       },
     },
@@ -53,6 +53,7 @@ const Profile = () => {
       success: (res) => {
         setIsEditing(false);
         form.reset();
+        window.location.href = '/account/dashboard/overview';
         return res?.message || DEFAULT_SUCCESS_MESSAGE;
       },
       error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,

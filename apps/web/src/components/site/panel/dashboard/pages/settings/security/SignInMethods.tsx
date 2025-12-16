@@ -164,7 +164,7 @@ const SignInMethods = () => {
                           </Button>
                         ) : (
                           <Link
-                            href={`http://localhost:8001/api/v1/auth/seller/connect/${provider.key}`}
+                            href={`http://localhost:8001/api/v1/auth/user/connect/${provider.key}`}
                             className={cn(
                               buttonVariants({
                                 size: 'sm',

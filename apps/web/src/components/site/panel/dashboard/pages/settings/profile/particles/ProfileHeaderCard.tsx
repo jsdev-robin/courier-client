@@ -1,28 +1,28 @@
-import React from 'react';
-import { z } from 'zod';
-import { UseFormReturn } from 'react-hook-form';
-import { authSchema } from '@repo/ui/validations/authSchema';
-import { Card, CardContent } from '@repo/ui/components/card';
 import useUser from '@/store/useUser';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@repo/ui/components/avatar';
-import { Button } from '@repo/ui/components/button';
-import { Camera, Globe, Mail, Phone, X } from 'lucide-react';
-import { useMuntahaDrop } from 'react-muntaha-uploader';
-import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
-import { Input } from '@repo/ui/components/input';
-import Image from 'next/image';
-import Heading from '@repo/ui/components/heading';
 import { Badge } from '@repo/ui/components/badge';
+import { Button } from '@repo/ui/components/button';
+import { Card, CardContent } from '@repo/ui/components/card';
+import { FormField, FormItem, FormMessage } from '@repo/ui/components/form';
+import Heading from '@repo/ui/components/heading';
+import { Input } from '@repo/ui/components/input';
 import {
   Item,
   ItemContent,
   ItemGroup,
   ItemTitle,
 } from '@repo/ui/components/item';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import { Camera, Mail, X } from 'lucide-react';
+import Image from 'next/image';
+import React from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { useMuntahaDrop } from 'react-muntaha-uploader';
+import { z } from 'zod';
 
 interface ProfileHeaderCardProps {
   form: UseFormReturn<z.infer<typeof authSchema.updateProfile>>;
@@ -135,18 +135,6 @@ const ProfileHeaderCard: React.FC<ProfileHeaderCardProps> = ({
                     <Mail />
                     {user?.personalInfo.email}
                   </Badge>
-                  {user?.personalInfo.phone && (
-                    <Badge>
-                      <Phone />
-                      {user?.personalInfo?.phone}
-                    </Badge>
-                  )}
-                  {user?.personalInfo.address && (
-                    <Badge>
-                      <Globe />
-                      {user?.personalInfo?.address}
-                    </Badge>
-                  )}
                 </div>
               </div>
             </div>

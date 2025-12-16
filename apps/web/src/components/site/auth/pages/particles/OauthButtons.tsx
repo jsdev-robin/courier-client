@@ -1,43 +1,42 @@
-import React from "react";
-import { Button } from "@repo/ui/components/button";
+import { Button } from '@repo/ui/components/button';
 import {
-  Facebook,
-  Google,
   Discord,
+  Facebook,
   Github,
+  Google,
   XformerlyTwitter,
-} from "@repo/ui/icons/index";
+} from '@repo/ui/icons/index';
 
 const providers = [
   {
-    name: "Meta",
+    name: 'Meta',
     Icon: Facebook,
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/seller/facebook`,
-    label: "Login with Meta",
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/user/facebook`,
+    label: 'Login with Meta',
   },
   {
-    name: "GitHub",
+    name: 'GitHub',
     Icon: Github,
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/seller/github`,
-    label: "Login with GitHub",
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/user/github`,
+    label: 'Login with GitHub',
   },
   {
-    name: "Discord",
+    name: 'Discord',
     Icon: Discord,
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/seller/discord`,
-    label: "Login with Discord",
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/user/discord`,
+    label: 'Login with Discord',
   },
   {
-    name: "Google",
+    name: 'Google',
     Icon: Google,
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/seller/google`,
-    label: "Login with Google",
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/user/google`,
+    label: 'Login with Google',
   },
   {
-    name: "X",
+    name: 'X',
     Icon: XformerlyTwitter,
-    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/seller/twitter`,
-    label: "Login with X",
+    url: `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/user/twitter`,
+    label: 'Login with X',
   },
 ];
 

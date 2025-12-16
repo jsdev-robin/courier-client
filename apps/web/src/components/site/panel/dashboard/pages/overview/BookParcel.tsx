@@ -23,9 +23,12 @@ import SelectInput from '@repo/ui/components/select-input';
 import { Textarea } from '@repo/ui/components/textarea';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import useUser from '../../../../../../store/useUser';
+import BookParcelWarning from './BookParcelWarning';
 import CoordsMap from './particles/CoordsMap';
 
 const BookParcel = () => {
+  const user = useUser();
   const form = useForm<z.infer<typeof parcelSchema.create>>({
     resolver: zodResolver(parcelSchema.create),
     mode: 'onChange',
@@ -53,10 +56,12 @@ const BookParcel = () => {
     },
   });
 
-  console.log(form.formState.errors);
-
   async function onSubmit(data: z.infer<typeof parcelSchema.create>) {
     console.log(data);
+  }
+
+  if (!user?.personalInfo?.address?.coordinates.length) {
+    return <BookParcelWarning />;
   }
 
   return (
