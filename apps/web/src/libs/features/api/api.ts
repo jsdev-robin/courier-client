@@ -21,7 +21,7 @@ const SKIP_REFRESH_ENDPOINTS = [
   '/auth/user/verify',
   '/auth/user/forgot-password',
   '/auth/user/reset-password',
-  '/auth/user/xxx',
+  '/auth/user/2fa/setup/finish',
   '/auth/user/2fa/verify/recovery',
 ];
 
