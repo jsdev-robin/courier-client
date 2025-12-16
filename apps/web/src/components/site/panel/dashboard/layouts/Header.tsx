@@ -48,7 +48,7 @@ const Header = () => {
           <MainLogo />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar>
                 <AvatarImage
                   src={user?.personalInfo?.avatar?.url}
                   alt={`${user?.personalInfo.displayName}'s photo`}
@@ -61,7 +61,7 @@ const Header = () => {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar>
                     <AvatarImage
                       src={user?.personalInfo?.avatar?.url}
                       alt={`${user?.personalInfo.displayName}'s photo`}

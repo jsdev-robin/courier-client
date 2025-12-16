@@ -139,21 +139,16 @@ const updateProfile = z.object({
     familyName: z.string().min(1).max(100),
     givenName: z.string().min(1).max(100),
     phone: z.string().nonempty({ message: 'Phone is required' }).optional(),
-    dateOfBirth: z
-      .string()
-      .nonempty({ message: 'Date of Birth is required' })
-      .optional(),
-    gender: z.string().nonempty({ message: 'Gender is required' }).optional(),
-    nationality: z.string().optional(),
-    address: z.string().optional(),
-    socialLinks: z
-      .object({
-        facebook: z.string().optional(),
-        twitter: z.string().optional(),
-        instagram: z.string().optional(),
-        youtube: z.string().optional(),
-      })
-      .optional(),
+    address: z.object({
+      street: z.string().nonempty('Street is required'),
+      city: z.string().nonempty('City is required'),
+      state: z.string().nonempty('State is required'),
+      postalCode: z.string().nonempty('Postal code is required'),
+      coordinates: z.tuple([
+        z.string().nonempty('Latitude is required'),
+        z.string().nonempty('Longitude is required'),
+      ]),
+    }),
   }),
 });
 
