@@ -299,6 +299,13 @@ export const userAuthApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    agentInviten: builder.mutation<SuccessResponse, { email: string }>({
+      query: (data) => ({
+        url: `/auth/admin/invite`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -332,4 +339,5 @@ export const {
   useFinishEmailChangeMutation,
   useChangePasswordMutation,
   useDisconnectOauthMutation,
+  useAgentInvitenMutation,
 } = userAuthApi;

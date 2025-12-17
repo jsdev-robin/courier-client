@@ -33,6 +33,17 @@ export const parcelAnalyticsApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['MapMetrics'],
     }),
+
+    findTodayStatusDistributionMetricsParcel: builder.query<
+      FindMapMetricsResponse,
+      void
+    >({
+      query: () => ({
+        url: `/analytics/admin/parcel/metrics/today/status/distribution`,
+        method: 'GET',
+      }),
+      providesTags: ['TodayStatusDistributionMetrics'],
+    }),
   }),
 });
 
@@ -40,4 +51,5 @@ export const {
   useFindStatsMetricsParcelQuery,
   useFindLast7DaysMetricsParcelQuery,
   useFindMapMetricsParcelQuery,
+  useFindTodayStatusDistributionMetricsParcelQuery,
 } = parcelAnalyticsApi;

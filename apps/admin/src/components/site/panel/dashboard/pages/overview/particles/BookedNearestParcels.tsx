@@ -37,7 +37,7 @@ const BookedNearestParcels: React.FC<BookedNearestParcelsProps> = ({
       <Heading as="h6" className="text-base font-semibold" asChild>
         Unassigned Parcels
       </Heading>
-      <ScrollArea className="max-h-100">
+      <ScrollArea className="max-h-120">
         {isError ? (
           <div className="text-destructive">Error</div>
         ) : isLoading ? (

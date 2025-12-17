@@ -101,6 +101,7 @@ export const apiSlice = createApi({
     'StatsMetrics',
     'Last7DaysMetrics',
     'MapMetrics',
+    'TodayStatusDistributionMetrics',
   ],
   endpoints: () => ({}),
 });

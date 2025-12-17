@@ -77,12 +77,20 @@ export interface FindGeoNearParcelResponse extends SuccessResponse {
       _id: string;
       display: {
         trackingNumber: string;
-        size: 'Small' | 'Medium' | 'Large';
-        paymentType: 'COD' | 'Prepaid';
-        agentName: string;
+        size: string;
+        paymentType: string;
         agentId: string;
+        agentName: string;
+        agentInfo: {
+          familyName: string;
+          givenName: string;
+          email: string;
+          avatar: {
+            url: string;
+          };
+        };
         distance: number;
-        distanceUnit: 'miles' | 'km';
+        distanceUnit: string;
       };
     }[];
   };

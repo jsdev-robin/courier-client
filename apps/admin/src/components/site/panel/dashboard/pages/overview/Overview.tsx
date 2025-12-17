@@ -1,6 +1,7 @@
 import DeliveryMap from './particles/DeliveryMap';
+import InviteNewAgent from './particles/InviteNewAgent';
 import OverviewStats from './particles/OverviewStats';
-import ParcelPaymentStatus from './particles/ParcelPaymentStatus';
+import TodayStatusMetrics from './particles/TodayStatusMetrics';
 import UnassignedParcelList from './particles/UnassignedParcelList';
 
 const Overview = () => {
@@ -14,7 +15,10 @@ const Overview = () => {
               <UnassignedParcelList />
             </div>
             <div className="lg:col-span-1 h-full">
-              <ParcelPaymentStatus />
+              <div className="space-y-4">
+                <TodayStatusMetrics />
+                <InviteNewAgent />
+              </div>
             </div>
           </div>
           <DeliveryMap />

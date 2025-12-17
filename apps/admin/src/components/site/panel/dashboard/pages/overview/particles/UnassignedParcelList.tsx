@@ -1,7 +1,6 @@
 'use client';
 
 import { useFindOneAndUpdateAssignAutoParcelMutation } from '@/libs/features/services/parcel/parcelApi';
-import { AiButton } from '@repo/ui/components/ai-button';
 import {
   Card,
   CardAction,
@@ -14,9 +13,9 @@ import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
 } from '@repo/ui/utils/contants';
-import { Bot } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { AiButton } from '../../../../../../ui/AiButton';
 import AvailableAgent from './AvailableAgent';
 import BookedNearestParcels from './BookedNearestParcels';
 
@@ -42,7 +41,6 @@ const UnassignedParcelList = () => {
         {id && (
           <CardAction>
             <AiButton onClick={() => handleAutoAssignParcel(id)}>
-              <Bot className="size-5 mr-1" />
               AI-Powered Assign
             </AiButton>
           </CardAction>

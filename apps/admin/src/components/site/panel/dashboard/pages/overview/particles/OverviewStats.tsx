@@ -48,7 +48,7 @@ const OverviewStats = () => {
           <>
             <Card>
               <CardHeader>
-                <CardDescription>Total Parcels Today</CardDescription>
+                <CardDescription>Total Parcels This Month</CardDescription>
                 <CardTitle className="text-3xl">
                   {today?.totalParcels}
                 </CardTitle>
@@ -85,7 +85,7 @@ const OverviewStats = () => {
 
             <Card className="pb-0">
               <CardHeader>
-                <CardDescription>Prepaid Amount Today</CardDescription>
+                <CardDescription>Prepaid Amount This Month</CardDescription>
                 <CardTitle className="text-3xl">
                   {today?.prepaidAmount} BDT
                 </CardTitle>
@@ -123,7 +123,7 @@ const OverviewStats = () => {
 
             <Card className="pb-0">
               <CardHeader>
-                <CardDescription>COD Amount Today</CardDescription>
+                <CardDescription>COD Amount This Month</CardDescription>
                 <CardTitle className="text-3xl">
                   {today?.codAmount} BDT
                 </CardTitle>
@@ -158,14 +158,16 @@ const OverviewStats = () => {
 
             <Card className="pb-0">
               <CardHeader>
-                <CardDescription>Delivery Success Rate</CardDescription>
+                <CardDescription>
+                  Delivery Success Rate This Month
+                </CardDescription>
                 <CardTitle className="text-3xl">
                   {today?.successRate}%
                 </CardTitle>
                 <CardDescription>
                   <span
                     className={cn(
-                      /^-/.test(String(today?.codAmountChange))
+                      /^-/.test(String(today?.successRateChange))
                         ? 'text-destructive'
                         : 'text-green-500',
                     )}

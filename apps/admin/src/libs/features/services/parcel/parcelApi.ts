@@ -23,7 +23,7 @@ export const parcelApi = apiSlice.injectEndpoints({
 
     findGeoNearParcel: builder.query<FindGeoNearParcelResponse, void>({
       query: () => ({
-        url: `/parcel/admin/geo-near`,
+        url: `/parcel/admin/near`,
         method: 'GET',
       }),
       providesTags: ['ParcelsGeoNear'],
@@ -37,7 +37,14 @@ export const parcelApi = apiSlice.injectEndpoints({
         url: `/parcel/admin/${parcelId}/${agentId}`,
         method: 'PATCH',
       }),
-      invalidatesTags: ['ParcelsGeoNear'],
+      invalidatesTags: [
+        'ParcelsGeoNear',
+        'AvailableAgent',
+        'StatsMetrics',
+        'Last7DaysMetrics',
+        'MapMetrics',
+        'TodayStatusDistributionMetrics',
+      ],
     }),
 
     findOneAndUpdateAssignAutoParcel: builder.mutation<SuccessResponse, string>(
@@ -46,7 +53,14 @@ export const parcelApi = apiSlice.injectEndpoints({
           url: `/parcel/admin/${id}/auto`,
           method: 'PATCH',
         }),
-        invalidatesTags: ['ParcelsGeoNear'],
+        invalidatesTags: [
+          'ParcelsGeoNear',
+          'AvailableAgent',
+          'StatsMetrics',
+          'Last7DaysMetrics',
+          'MapMetrics',
+          'TodayStatusDistributionMetrics',
+        ],
       },
     ),
   }),

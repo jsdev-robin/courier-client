@@ -47,3 +47,18 @@ export interface FindMapMetricsResponse extends SuccessResponse {
     }[];
   };
 }
+
+export interface FindTodayStatusDistributionMetricsResponse extends SuccessResponse {
+  data: {
+    metrics: {
+      status:
+        | 'Booked'
+        | 'Delivered'
+        | 'Assigned'
+        | 'Picked Up'
+        | 'In Transit'
+        | 'Failed';
+      count: number;
+    }[];
+  };
+}
