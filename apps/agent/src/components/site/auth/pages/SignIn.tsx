@@ -1,25 +1,22 @@
-"use client";
+'use client';
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useSigninMutation } from '@/libs/features/services/auth/authApi';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@repo/ui/components/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/card";
+} from '@repo/ui/components/card';
+import { Checkbox } from '@repo/ui/components/checkbox';
 import {
   Field,
   FieldDescription,
   FieldGroup,
-  FieldSeparator,
   FieldSet,
-} from "@repo/ui/components/field";
-import { Button } from "@repo/ui/components/button";
-import { Input } from "@repo/ui/components/input";
+} from '@repo/ui/components/field';
 import {
   Form,
   FormControl,
@@ -27,28 +24,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/form";
-import { Checkbox } from "@repo/ui/components/checkbox";
-import Link from "next/link";
-import { Spinner } from "@repo/ui/components/spinner";
-import { authSchema } from "@repo/ui/validations/authSchema";
-import OauthButtons from "./particles/OauthButtons";
-import { useSigninMutation } from "@/libs/features/services/auth/authApi";
-import { toast } from "sonner";
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Spinner } from '@repo/ui/components/spinner';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import PasskeySignIn from "./particles/PasskeySignIn";
+} from '@repo/ui/utils/contants';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
+import PasskeySignIn from './particles/PasskeySignIn';
 
 const SignIn = () => {
   const [signin, { isLoading }] = useSigninMutation();
   const form = useForm<z.infer<typeof authSchema.signin>>({
     resolver: zodResolver(authSchema.signin),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      email: "",
-      password: "Passw0rd!",
+      email: '',
+      password: 'Passw0rd!',
       remember: false,
     },
   });
@@ -59,12 +56,12 @@ const SignIn = () => {
         .unwrap()
         .then((res) => res),
       {
-        loading: "Signing in...",
+        loading: 'Signing in...',
         success: (res) => {
           if (res.data.enable2fa) {
-            window.location.href = "/sessions/verify-2fa/app";
+            window.location.href = '/sessions/verify-2fa/app';
           } else {
-            window.location.href = "/account/dashboard/overview";
+            window.location.href = '/account/dashboard/overview';
           }
           return res?.message || DEFAULT_SUCCESS_MESSAGE;
         },
@@ -153,15 +150,9 @@ const SignIn = () => {
                           Sing in
                         </Button>
                       </Field>
-                      <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                        Or continue with
-                      </FieldSeparator>
-                      <Field className="grid grid-cols-5 gap-4">
-                        <OauthButtons />
-                      </Field>
                       <Field>
                         <FieldDescription className="text-center">
-                          Don&apos;t have an account?{" "}
+                          Don&apos;t have an account?{' '}
                           <a href="/sign-up">Sign up</a>
                         </FieldDescription>
                       </Field>
@@ -172,7 +163,7 @@ const SignIn = () => {
             </CardContent>
           </Card>
           <FieldDescription className="px-6 text-center">
-            By clicking continue, you agree to our{" "}
+            By clicking continue, you agree to our{' '}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </FieldDescription>
         </div>

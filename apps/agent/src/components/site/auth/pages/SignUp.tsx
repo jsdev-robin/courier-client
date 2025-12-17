@@ -1,25 +1,21 @@
-"use client";
+'use client';
 
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useSignupMutation } from '@/libs/features/services/auth/authApi';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@repo/ui/components/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/card";
+} from '@repo/ui/components/card';
 import {
   Field,
   FieldDescription,
   FieldGroup,
-  FieldSeparator,
   FieldSet,
-} from "@repo/ui/components/field";
-import { Button } from "@repo/ui/components/button";
-import { Input } from "@repo/ui/components/input";
+} from '@repo/ui/components/field';
 import {
   Form,
   FormControl,
@@ -27,30 +23,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/form";
-import { Spinner } from "@repo/ui/components/spinner";
-import { authSchema } from "@repo/ui/validations/authSchema";
-import OauthButtons from "./particles/OauthButtons";
-import { useSignupMutation } from "@/libs/features/services/auth/authApi";
-import { toast } from "sonner";
+} from '@repo/ui/components/form';
+import { Input } from '@repo/ui/components/input';
+import { Spinner } from '@repo/ui/components/spinner';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import { useRouter } from "next/navigation";
+} from '@repo/ui/utils/contants';
+import { authSchema } from '@repo/ui/validations/authSchema';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
 const SignUp = () => {
   const router = useRouter();
   const [signup, { isLoading }] = useSignupMutation();
   const form = useForm<z.infer<typeof authSchema.signup>>({
     resolver: zodResolver(authSchema.signup),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      familyName: "",
-      givenName: "",
-      email: "",
-      password: "Passw0rd!",
-      passwordConfirm: "Passw0rd!",
+      familyName: '',
+      givenName: '',
+      email: '',
+      password: 'Passw0rd!',
+      passwordConfirm: 'Passw0rd!',
     },
   });
 
@@ -59,11 +56,11 @@ const SignUp = () => {
       signup(data)
         .unwrap()
         .then((res) => {
-          router.push("/sessions/verify");
+          router.push('/sessions/verify');
           return res;
         }),
       {
-        loading: "Creating your account...",
+        loading: 'Creating your account...',
         success: (res) => res?.message || DEFAULT_SUCCESS_MESSAGE,
         error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
       },
@@ -86,12 +83,6 @@ const SignUp = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                   <FieldSet>
                     <FieldGroup>
-                      <Field className="grid grid-cols-5 gap-4">
-                        <OauthButtons />
-                      </Field>
-                      <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                        Or continue with
-                      </FieldSeparator>
                       <Field>
                         <FormField
                           control={form.control}
@@ -177,7 +168,7 @@ const SignUp = () => {
 
                       <Field>
                         <FieldDescription className="text-center">
-                          Don&apos;t have an account?{" "}
+                          Don&apos;t have an account?{' '}
                           <a href="/sign-in">Sign in</a>
                         </FieldDescription>
                       </Field>
@@ -188,7 +179,7 @@ const SignUp = () => {
             </CardContent>
           </Card>
           <FieldDescription className="px-6 text-center">
-            By clicking continue, you agree to our{" "}
+            By clicking continue, you agree to our{' '}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </FieldDescription>
         </div>
