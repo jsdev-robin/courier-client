@@ -100,6 +100,7 @@ export const apiSlice = createApi({
     'AvailableAgent',
     'StatsMetrics',
     'Last7DaysMetrics',
+    'MapMetrics',
   ],
   endpoints: () => ({}),
 });

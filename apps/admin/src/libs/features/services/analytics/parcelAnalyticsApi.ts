@@ -1,6 +1,7 @@
 import { apiSlice } from '../../api/api';
 import {
   FindLast7DaysMetricsResponse,
+  FindMapMetricsResponse,
   FindStatsMetricsResponse,
 } from './types';
 
@@ -24,10 +25,19 @@ export const parcelAnalyticsApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['Last7DaysMetrics'],
     }),
+
+    findMapMetricsParcel: builder.query<FindMapMetricsResponse, void>({
+      query: () => ({
+        url: `/analytics/admin/parcel/metrics/locations`,
+        method: 'GET',
+      }),
+      providesTags: ['MapMetrics'],
+    }),
   }),
 });
 
 export const {
   useFindStatsMetricsParcelQuery,
   useFindLast7DaysMetricsParcelQuery,
+  useFindMapMetricsParcelQuery,
 } = parcelAnalyticsApi;

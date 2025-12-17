@@ -27,3 +27,23 @@ export interface FindLast7DaysMetricsResponse extends SuccessResponse {
     };
   };
 }
+
+export interface FindMapMetricsResponse extends SuccessResponse {
+  data: {
+    metrics: {
+      trackingNumber: string;
+      deliveryAddress: {
+        street: string;
+        city: string;
+        state: string;
+        country: string;
+        postalCode: string;
+        contactName: string;
+        contactPhone: string;
+      };
+      name: string;
+      status: string;
+      coordinates: [number, number];
+    }[];
+  };
+}

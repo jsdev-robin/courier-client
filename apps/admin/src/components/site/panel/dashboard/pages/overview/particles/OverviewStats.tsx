@@ -22,18 +22,18 @@ const config = {
 
 const OverviewStats = () => {
   const {
-    data: stats,
+    data: data1,
     isLoading: loading1,
     isError: error1,
   } = useFindStatsMetricsParcelQuery();
   const {
-    data: last7Days,
+    data: data2,
     isLoading: laoding2,
     isError: error2,
   } = useFindLast7DaysMetricsParcelQuery();
 
-  const today = stats?.data.metrics;
-  const week = last7Days?.data.metrics;
+  const today = data1?.data.metrics;
+  const week = data2?.data.metrics;
 
   return (
     <div className="space-y-4">
@@ -87,7 +87,7 @@ const OverviewStats = () => {
               <CardHeader>
                 <CardDescription>Prepaid Amount Today</CardDescription>
                 <CardTitle className="text-3xl">
-                  {today?.prepaidAmount}
+                  {today?.prepaidAmount} BDT
                 </CardTitle>
                 <CardDescription>
                   <span
@@ -124,7 +124,9 @@ const OverviewStats = () => {
             <Card className="pb-0">
               <CardHeader>
                 <CardDescription>COD Amount Today</CardDescription>
-                <CardTitle className="text-3xl">{today?.codAmount}</CardTitle>
+                <CardTitle className="text-3xl">
+                  {today?.codAmount} BDT
+                </CardTitle>
                 <CardDescription>
                   <span
                     className={cn(
