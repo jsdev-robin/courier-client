@@ -98,7 +98,8 @@ export const apiSlice = createApi({
     'Parcel',
     'ParcelsGeoNear',
     'AvailableAgent',
-    'PaymentTypeStats',
+    'StatsMetrics',
+    'Last7DaysMetrics',
   ],
   endpoints: () => ({}),
 });
