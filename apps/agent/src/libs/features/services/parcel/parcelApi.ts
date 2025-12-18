@@ -21,7 +21,14 @@ export const parcelApi = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: { status },
       }),
-      invalidatesTags: ['AssignedParcel'],
+      invalidatesTags: [
+        'AssignedParcel',
+        'PerformanceMetrics',
+        'StatsMetrics',
+        'Last7DaysMetrics',
+        'MapMetrics',
+        'TodayStatusDistributionMetrics',
+      ],
     }),
   }),
 });

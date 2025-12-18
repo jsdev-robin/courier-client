@@ -1,5 +1,6 @@
 'use client';
 
+import { useFindParcelQuery } from '@/libs/features/services/parcel/parcelApi';
 import { Button } from '@repo/ui/components/button';
 import {
   Card,
@@ -13,16 +14,15 @@ import { ItemGroup } from '@repo/ui/components/item';
 import { Skeleton } from '@repo/ui/components/skeleton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import { useFindParcelQuery } from '../../../../../../../libs/features/services/parcel/parcelApi';
 import ParcelItem from './ParcelItem';
 
 const OverviewAssignedParcels = () => {
   const [page, setPage] = useState(1);
   const { data, isError, isLoading } = useFindParcelQuery(page);
 
-  const totalPages = Math.ceil(
-    (data?.data.total || 0) / (data?.data.limit || 10),
-  );
+  const total = data?.data.total;
+  const limit = data?.data.limit;
+  const totalPages = total && limit ? Math.ceil(total / limit) : 1;
 
   return (
     <Card>
