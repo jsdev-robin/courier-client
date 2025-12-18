@@ -4,20 +4,23 @@ export interface ParcelCreateRequest {
     city: string;
     state: string;
     postalCode: string;
-    coordinates: [string, string];
+    location: {
+      coordinates: [string, string];
+    };
     contactName: string;
     contactPhone: string;
   };
   parcelDetails: {
     size: string;
     weight: string;
-    type: string;
+    category: string;
     description?: string;
   };
   payment: {
-    type: string;
+    method: string;
     amount: string;
     codAmount?: string;
+    status?: string;
   };
 }
 

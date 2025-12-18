@@ -1,5 +1,7 @@
 'use client';
 
+import { useCreateParcelMutation } from '@/libs/features/services/parcel/parcelApi';
+import useUser from '@/store/useUser';
 import { parcelSchema } from '@/validations/parcelSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@repo/ui/components/button';
@@ -20,14 +22,20 @@ import {
 import Heading from '@repo/ui/components/heading';
 import { Input } from '@repo/ui/components/input';
 import SelectInput from '@repo/ui/components/select-input';
+import { Spinner } from '@repo/ui/components/spinner';
 import { Textarea } from '@repo/ui/components/textarea';
+import {
+  DEFAULT_SERVER_ERROR_MESSAGE,
+  DEFAULT_SUCCESS_MESSAGE,
+} from '@repo/ui/utils/contants';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import z from 'zod';
-import useUser from '../../../../../../store/useUser';
 import BookParcelWarning from './BookParcelWarning';
 import CoordsMap from './particles/CoordsMap';
 
 const BookParcel = () => {
+  const [createParcel, { isLoading, isSuccess }] = useCreateParcelMutation();
   const user = useUser();
   const form = useForm<z.infer<typeof parcelSchema.create>>({
     resolver: zodResolver(parcelSchema.create),
@@ -38,18 +46,20 @@ const BookParcel = () => {
         city: '',
         state: '',
         postalCode: '',
-        coordinates: [],
+        location: {
+          coordinates: [],
+        },
         contactName: '',
         contactPhone: '',
       },
       parcelDetails: {
         size: '',
         weight: '',
-        type: '',
+        category: '',
         description: '',
       },
       payment: {
-        type: '',
+        method: '',
         amount: '',
         codAmount: '',
       },
@@ -57,7 +67,11 @@ const BookParcel = () => {
   });
 
   async function onSubmit(data: z.infer<typeof parcelSchema.create>) {
-    console.log(data);
+    await toast.promise(createParcel(data).unwrap(), {
+      loading: 'Creating product...',
+      success: (res) => res.message || DEFAULT_SUCCESS_MESSAGE,
+      error: (err) => err.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
+    });
   }
 
   if (!user?.personalInfo?.address?.coordinates.length) {
@@ -193,10 +207,10 @@ const BookParcel = () => {
                               />
                               <FormField
                                 control={form.control}
-                                name="parcelDetails.type"
+                                name="parcelDetails.category"
                                 render={({ field }) => (
                                   <FormItem>
-                                    <FormLabel>Parcel Type</FormLabel>
+                                    <FormLabel>Parcel Category</FormLabel>
                                     <FormControl>
                                       <SelectInput
                                         {...field}
@@ -265,10 +279,10 @@ const BookParcel = () => {
                           <div className="space-y-6">
                             <FormField
                               control={form.control}
-                              name="payment.type"
+                              name="payment.method"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Payment Type</FormLabel>
+                                  <FormLabel>Payment Method</FormLabel>
                                   <FormControl>
                                     <SelectInput
                                       {...field}
@@ -319,7 +333,10 @@ const BookParcel = () => {
                   </div>
                 </div>
                 <div className="flex items-center justify-center">
-                  <Button>Schedule Pickup</Button>
+                  <Button disabled={isLoading} type="submit">
+                    {isLoading && <Spinner />}
+                    Schedule Pickup
+                  </Button>
                 </div>
               </div>
             </form>

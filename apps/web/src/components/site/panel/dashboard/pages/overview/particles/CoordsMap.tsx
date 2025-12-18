@@ -2,6 +2,7 @@
 
 import { usePlaceSearch } from '@/hooks/usePlaceSearch';
 import MapAutoMove from '@/utils/MapAutoMove';
+import MapClick from '@/utils/MapClick';
 import { parcelSchema } from '@/validations/parcelSchema';
 import {
   FormControl,
@@ -25,7 +26,6 @@ import {
 import { Spinner } from '@repo/ui/components/spinner';
 import { UseFormReturn } from 'react-hook-form';
 import z from 'zod';
-import MapClick from '../../../../../../../utils/MapClick';
 
 interface CoordsMapProps {
   form: UseFormReturn<z.infer<typeof parcelSchema.create>>;
@@ -37,7 +37,7 @@ const CoordsMap: React.FC<CoordsMapProps> = ({ form }) => {
   return (
     <FormField
       control={form.control}
-      name="deliveryAddress.coordinates"
+      name="deliveryAddress.location.coordinates"
       render={({ field }) => (
         <FormItem>
           <FormLabel>📍 Delivery Location</FormLabel>
