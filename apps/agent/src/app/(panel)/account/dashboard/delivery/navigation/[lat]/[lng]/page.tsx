@@ -1,5 +1,11 @@
-const page = () => {
-  return <div>page</div>;
+import Navigation from '@/components/site/panel/dashboard/pages/navigations/Navigation';
+
+const NavigationPage = () => {
+  return (
+    <>
+      <Navigation />
+    </>
+  );
 };
 
-export default page;
+export default NavigationPage;

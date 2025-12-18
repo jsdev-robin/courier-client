@@ -21,12 +21,5 @@ export interface FindNavigateResponse extends SuccessResponse {
 }
 
 export interface FindDurationRequest {
-  parcel: {
-    lat: number;
-    lng: number;
-  };
-  agent: {
-    lat: number;
-    lng: number;
-  };
+  location: string[];
 }

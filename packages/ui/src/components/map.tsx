@@ -689,6 +689,7 @@ function MapLocatePulseIcon() {
 }
 
 function MapLocateControl({
+  icon = <MapLocatePulseIcon />,
   className,
   watch = false,
   onLocationFound,
@@ -698,6 +699,8 @@ function MapLocateControl({
   Pick<LocateOptions, 'watch'> & {
     onLocationFound?: (location: LocationEvent) => void;
     onLocationError?: (error: ErrorEvent) => void;
+  } & {
+    icon?: ReactNode;
   }) {
   const map = useMap();
   const [isLocating, setIsLocating] = useDebounceLoadingState(200);
@@ -762,9 +765,7 @@ function MapLocateControl({
           <NavigationIcon />
         )}
       </Button>
-      {position && (
-        <MapMarker position={position} icon={<MapLocatePulseIcon />} />
-      )}
+      {position && <MapMarker position={position} icon={icon} />}
     </>
   );
 }
