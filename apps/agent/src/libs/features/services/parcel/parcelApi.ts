@@ -4,9 +4,9 @@ import { findOneAndUpdateStatusParcel, FindParcelResponse } from './types';
 
 export const parcelApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    findParcel: builder.query<FindParcelResponse, void>({
-      query: () => ({
-        url: `/parcel/agent`,
+    findParcel: builder.query<FindParcelResponse, number>({
+      query: (page) => ({
+        url: `/parcel/agent?page=${page}`,
         method: 'GET',
       }),
       providesTags: ['AssignedParcel'],
@@ -17,7 +17,7 @@ export const parcelApi = apiSlice.injectEndpoints({
       findOneAndUpdateStatusParcel
     >({
       query: ({ trackingNumber, status }) => ({
-        url: `/parcel/agent/${trackingNumber}/qr`,
+        url: `/parcel/agent/${trackingNumber}`,
         method: 'PATCH',
         body: { status },
       }),

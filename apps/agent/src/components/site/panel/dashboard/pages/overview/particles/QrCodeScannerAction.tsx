@@ -18,7 +18,7 @@ import { QrCode } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-const ParcelItemQrCode = ({
+const QrCodeScannerAction = ({
   trackingNumber,
   status,
 }: {
@@ -27,13 +27,13 @@ const ParcelItemQrCode = ({
 }) => {
   const [scan, setScan] = useState('');
   const [open, setOpen] = useState(false);
-  const [findOneAndUpdateStatusBytrackingNumberParcel] =
+  const [findOneAndUpdateStatusParcel] =
     useFindOneAndUpdateStatusParcelMutation();
 
   useEffect(() => {
     if (scan && status) {
       toast.promise(
-        findOneAndUpdateStatusBytrackingNumberParcel({
+        findOneAndUpdateStatusParcel({
           trackingNumber: scan,
           status: status,
         }).unwrap(),
@@ -52,15 +52,15 @@ const ParcelItemQrCode = ({
         },
       );
     }
-  }, [scan, status, findOneAndUpdateStatusBytrackingNumberParcel]);
+  }, [scan, status, findOneAndUpdateStatusParcel]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           onClick={() => setScan('')}
-          variant="ghost"
-          size="icon"
+          variant="outline"
+          size="icon-sm"
           disabled={!status.length}
         >
           <QrCode />
@@ -68,7 +68,7 @@ const ParcelItemQrCode = ({
       </DialogTrigger>
       <DialogContent className="size-60! aspect-square">
         <DialogHeader>
-          <DialogTitle>Parcel QR Scanner</DialogTitle>
+          <DialogTitle className="text-sm">Parcel QR Scanner</DialogTitle>
         </DialogHeader>
         {!scan && (
           <Scanner
@@ -91,4 +91,4 @@ const ParcelItemQrCode = ({
   );
 };
 
-export default ParcelItemQrCode;
+export default QrCodeScannerAction;

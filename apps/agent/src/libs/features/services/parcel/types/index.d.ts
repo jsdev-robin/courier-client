@@ -1,49 +1,69 @@
+import { SuccessResponse } from '../../../types/api-response';
+
 export interface findOneAndUpdateStatusParcel {
   status: string;
   trackingNumber: string;
 }
 
-export interface FindParcelResponse extends SuccessResponse {
-  data: {
-    parcels: {
-      _id: string;
-      trackingNumber: string;
-      customer: {
-        personalInfo: {
-          familyName: string;
-          givenName: string;
-          email: string;
-        };
+export interface Parcel {
+  _id: string;
+  trackingNumber: string;
+  customer: {
+    personalInfo: {
+      familyName: string;
+      givenName: string;
+      email: string;
+      phone: string;
+      avatar: {
+        public_id: string;
+        url: string;
       };
-      deliveryAddress: {
+      address: {
         street: string;
         city: string;
         state: string;
-        country: string;
         postalCode: string;
-        coordinates: {
-          lat: number;
-          lng: number;
-          address: string;
-        };
+        coordinates: string[];
       };
-      parcelDetails: {
-        size: 'Small' | 'Medium' | 'Large';
-      };
-      payment: {
-        type: 'COD' | 'Prepaid';
-        status: 'Pending' | 'Paid';
-      };
-      status: 'Failed' | 'Delivered' | 'Assigned' | 'In Transit' | 'Picked Up';
-      nextStatuses: {
-        status: 'Failed' | 'Delivered' | 'Picked Up' | 'In Transit';
-      }[];
-      agent: {
-        location: {
-          lat: number;
-          lng: number;
-        };
-      };
-    }[];
+    };
+  };
+  deliveryAddress: {
+    street: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
+    location: {
+      type: 'Point';
+      coordinates: number[];
+    };
+    contactName: string;
+    contactPhone: string;
+  };
+  parcelDetails: {
+    size: string;
+  };
+  payment: {
+    method: string;
+    amount: number;
+    codAmount: number;
+    status: string;
+  };
+  status: string;
+  nextStatuses: {
+    status: string;
+  }[];
+  agent: {
+    location: {
+      coordinates: number[];
+    };
+  };
+}
+
+export interface FindParcelResponse extends SuccessResponse {
+  data: {
+    total: number;
+    limit: number;
+    parcels: Parcel[];
   };
 }

@@ -1,6 +1,15 @@
-"use client";
+'use client';
 
-import React from "react";
+import { useDisconnectOauthMutation } from '@/libs/features/services/auth/authApi';
+import useUser from '@/store/useUser';
+import { buttonVariants } from '@repo/ui/components/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@repo/ui/components/card';
 import {
   Item,
   ItemActions,
@@ -10,39 +19,29 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@repo/ui/components/item";
-import { Mail, RectangleEllipsis, UserLock } from "lucide-react";
-import { Button, buttonVariants } from "@repo/ui/components/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@repo/ui/components/card";
+} from '@repo/ui/components/item';
 import {
   Discord,
+  Facebook,
   Github,
   Google,
-  Facebook,
   XformerlyTwitter,
-} from "@repo/ui/icons/index";
-import Link from "next/link";
-import { cn } from "@repo/ui/lib/utils";
-import useUser from "@/store/useUser";
-import { toast } from "sonner";
+} from '@repo/ui/icons/index';
+import { cn } from '@repo/ui/lib/utils';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
-} from "@repo/ui/utils/contants";
-import { useDisconnectOauthMutation } from "@/libs/features/services/auth/authApi";
+} from '@repo/ui/utils/contants';
+import { Mail, RectangleEllipsis, UserLock } from 'lucide-react';
+import Link from 'next/link';
+import { toast } from 'sonner';
 
 const oauthProviders = [
-  { name: "Google", key: "google", icon: <Google /> },
-  { name: "Github", key: "github", icon: <Github /> },
-  { name: "Facebook", key: "facebook", icon: <Facebook /> },
-  { name: "Discord", key: "discord", icon: <Discord /> },
-  { name: "Twitter", key: "twitter", icon: <XformerlyTwitter /> },
+  { name: 'Google', key: 'google', icon: <Google /> },
+  { name: 'Github', key: 'github', icon: <Github /> },
+  { name: 'Facebook', key: 'facebook', icon: <Facebook /> },
+  { name: 'Discord', key: 'discord', icon: <Discord /> },
+  { name: 'Twitter', key: 'twitter', icon: <XformerlyTwitter /> },
 ];
 
 const SignInMethods = () => {
@@ -86,7 +85,7 @@ const SignInMethods = () => {
                   <Link
                     href="/account/dashboard/settings/emails"
                     className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }),
+                      buttonVariants({ size: 'sm', variant: 'outline' }),
                     )}
                   >
                     Manage
@@ -106,7 +105,7 @@ const SignInMethods = () => {
                   <Link
                     href="/account/dashboard/settings/security/password-change"
                     className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }),
+                      buttonVariants({ size: 'sm', variant: 'outline' }),
                     )}
                   >
                     Change password
@@ -128,59 +127,13 @@ const SignInMethods = () => {
                   <Link
                     href="/account/dashboard/settings/security/trusted-device"
                     className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }),
+                      buttonVariants({ size: 'sm', variant: 'outline' }),
                     )}
                   >
                     Add passkey
                   </Link>
                 </ItemActions>
               </Item>
-              <ItemSeparator />
-              {oauthProviders.map((provider, i) => {
-                const account = user?.authentication?.oauth?.find(
-                  (p) => p.provider === provider.key,
-                );
-                return (
-                  <React.Fragment key={provider.key}>
-                    <Item>
-                      <ItemMedia variant="icon">{provider.icon}</ItemMedia>
-                      <ItemContent>
-                        <ItemTitle>{provider.name}</ItemTitle>
-                        <ItemDescription>
-                          Sign in with your {provider.name} account
-                        </ItemDescription>
-                      </ItemContent>
-                      <ItemActions>
-                        {account ? (
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() =>
-                              handleDisconnect(provider.key, account.email)
-                            }
-                            disabled={isLoading}
-                          >
-                            Disconnect
-                          </Button>
-                        ) : (
-                          <Link
-                            href={`http://localhost:8001/api/v1/auth/seller/connect/${provider.key}`}
-                            className={cn(
-                              buttonVariants({
-                                size: "sm",
-                                variant: "outline",
-                              }),
-                            )}
-                          >
-                            Connect
-                          </Link>
-                        )}
-                      </ItemActions>
-                    </Item>
-                    {i < oauthProviders.length - 1 && <ItemSeparator />}
-                  </React.Fragment>
-                );
-              })}
             </ItemGroup>
           </CardContent>
         </Card>

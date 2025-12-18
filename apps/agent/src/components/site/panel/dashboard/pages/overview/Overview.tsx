@@ -1,4 +1,4 @@
-import OverviewQRCodeScanner from './particles/OverviewQRCodeScanner';
+import OverviewAssignedParcels from './particles/OverviewAssignedParcels';
 import OverviewStats from './particles/OverviewStats';
 
 const Overview = () => {
@@ -7,10 +7,9 @@ const Overview = () => {
       <div className="wrapper">
         <div className="space-y-4">
           <OverviewStats />
-          <div className="grid gap-4 grid-cols-3">
-            <div className="col-span-2">{/* <OverviewAssignParcels /> */}</div>
-            <div className="col-span-1">
-              <OverviewQRCodeScanner />
+          <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <OverviewAssignedParcels />
             </div>
           </div>
         </div>

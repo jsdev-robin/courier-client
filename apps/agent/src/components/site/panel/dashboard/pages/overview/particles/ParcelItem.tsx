@@ -1,173 +1,100 @@
-'use client';
-
-import { useFindOneAndUpdateStatusParcelMutation } from '@/libs/features/services/parcel/parcelApi';
+import { Parcel } from '@/libs/features/services/parcel/types';
 import { paymentClass, PaymentType } from '@/utils/paymentClass';
 import { PaymentStatus, paymentStatusClass } from '@/utils/paymentStatusClass';
-import { ParcelSize, sizeClass } from '@/utils/sizeClass';
 import { ParcelStatus, statusClass } from '@/utils/statusClass';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@repo/ui/components/avatar';
 import { Badge } from '@repo/ui/components/badge';
-import { Button, buttonVariants } from '@repo/ui/components/button';
+import { buttonVariants } from '@repo/ui/components/button';
+import Heading from '@repo/ui/components/heading';
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemFooter,
+  ItemHeader,
   ItemTitle,
 } from '@repo/ui/components/item';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@repo/ui/components/select';
 import { cn } from '@repo/ui/lib/utils';
-import {
-  DEFAULT_SERVER_ERROR_MESSAGE,
-  DEFAULT_SUCCESS_MESSAGE,
-} from '@repo/ui/utils/contants';
 import { MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { toast } from 'sonner';
-import ParcelItemQrCode from './ParcelItemQrCode';
+import React from 'react';
+import ParcelStatusAction from './ParcelStatusAction';
+import QrCodeScannerAction from './QrCodeScannerAction';
 
 interface ParcelItemProps {
-  trackingNumber: string;
-  status: string;
-  deliveryAddress: { street: string; state: string };
-  payment: { type: string; status: string };
-  parcelDetails: { size: string };
-  nextStatuses: {
-    status: string;
-  }[];
-  parcel: {
-    lat: number;
-    lng: number;
-  };
-  agent: {
-    lat: number;
-    lng: number;
-  };
+  parcel: Parcel;
 }
 
-export const ParcelItem: React.FC<ParcelItemProps> = ({
-  trackingNumber,
-  status,
-  deliveryAddress,
-  payment,
-  parcelDetails,
-  nextStatuses,
-  parcel,
-  agent,
-}) => {
-  const [findOneAndUpdateStatusBytrackingNumberParcel, { isSuccess }] =
-    useFindOneAndUpdateStatusParcelMutation();
-  // const { data, isLoading, isError } = useFindDurationQuery(
-  //   { parcel, agent },
-  //   {
-  //     skip: !parcel || !agent,
-  //   },
-  // );
-
-  const handleStatus = (newStatus: string) => {
-    toast.promise(
-      findOneAndUpdateStatusBytrackingNumberParcel({
-        trackingNumber,
-        status: newStatus,
-      }).unwrap(),
-      {
-        loading: 'Updating parcel status...',
-        success: (res) => {
-          return res.message || DEFAULT_SUCCESS_MESSAGE;
-        },
-        error: (err) => {
-          return err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE;
-        },
-      },
-    );
-  };
-
+const ParcelItem: React.FC<ParcelItemProps> = ({ parcel }) => {
   return (
-    <Item variant="outline">
-      <ItemContent>
-        <ItemTitle>
-          {trackingNumber}
-          <Badge className={statusClass[status as ParcelStatus]}>
-            {status}
+    <Item variant="muted" size="sm">
+      <ItemHeader>
+        <div className="flex items-center gap-2">
+          <span>{parcel.trackingNumber}</span>
+          <Badge
+            className={
+              paymentStatusClass[parcel.payment.status as PaymentStatus]
+            }
+          >
+            {parcel.payment.status}
           </Badge>
-          <ParcelItemQrCode
-            trackingNumber={trackingNumber}
-            status={nextStatuses[0]?.status ?? ''}
+          <Badge className={paymentClass[parcel.payment.method as PaymentType]}>
+            {parcel.payment.method}
+          </Badge>
+          <Badge className={statusClass[parcel.status as ParcelStatus]}>
+            {parcel.status}
+          </Badge>
+        </div>
+        <div className="flex items-center gap-2">
+          <Heading as="h6" asChild className="text-xs">
+            Paid: {parcel.payment.amount} BDT
+          </Heading>
+          <Heading as="h6" asChild className="text-xs">
+            COD: {parcel.payment.codAmount} BDT
+          </Heading>
+          <QrCodeScannerAction
+            trackingNumber={parcel.trackingNumber}
+            status={parcel.nextStatuses[0]?.status ?? ''}
           />
-        </ItemTitle>
+        </div>
+      </ItemHeader>
+      <ItemContent>
+        <ItemTitle>{parcel.deliveryAddress.contactName}</ItemTitle>
         <ItemDescription>
-          <span className="flex-col flex gap-2">
-            <span className="inline">
-              {deliveryAddress.street}, {deliveryAddress.state},{' '}
-              {/* {isError
-                ? null
-                : isLoading
-                  ? 'Calculating...'
-                  : `${data?.data.distance}, ${data?.data.duration} away`} */}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Badge
-                className={paymentStatusClass[payment.status as PaymentStatus]}
-              >
-                {payment.status}
-              </Badge>
-              <Badge className={paymentClass[payment.type as PaymentType]}>
-                {payment.type}
-              </Badge>
-              <Badge className={sizeClass[parcelDetails.size as ParcelSize]}>
-                {parcelDetails.size}
-              </Badge>
+          <span>
+            {parcel.deliveryAddress.street}, {parcel.deliveryAddress.city},{' '}
+            {parcel.deliveryAddress.state}, {parcel.deliveryAddress.country}{' '}
+            {parcel.deliveryAddress.postalCode}
+          </span>
+          <span className="flex items-center gap-4">
+            <span className="flex items-center gap-1">
+              <Phone className="size-4" />
+              {parcel.deliveryAddress.contactPhone}
             </span>
           </span>
         </ItemDescription>
       </ItemContent>
-      <ItemActions>
-        <Badge>High</Badge>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      </ItemActions>
-      <ItemFooter className="grid gap-4 md:grid-cols-3">
+      <ItemFooter className="grid gap-2 grid-cols-3">
         <Link
-          href={`/account/dashboard/delivery/navigation/${parcel.lat}/${parcel.lng}`}
-          className={cn(buttonVariants({ variant: 'outline' }))}
+          href={`/account/dashboard/delivery/navigation/${parcel.deliveryAddress.location.coordinates[0]}/${parcel.deliveryAddress.location.coordinates[1]}`}
+          className={cn(buttonVariants({ size: 'sm', variant: 'outline' }))}
         >
           <MapPin />
           View on Map
         </Link>
-        <Button variant="outline">
+        <Link
+          href={`tel:${parcel.deliveryAddress.contactPhone}`}
+          className={cn(buttonVariants({ size: 'sm', variant: 'outline' }))}
+        >
           <Phone />
-          Call Customre
-        </Button>
-        <Select onValueChange={handleStatus} disabled={!nextStatuses.length}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Next status..." />
-          </SelectTrigger>
-          <SelectContent>
-            {nextStatuses.map((item, i) => (
-              <SelectItem
-                value={item.status}
-                key={i}
-                disabled={i !== 0 && i !== nextStatuses.length - 1}
-              >
-                {item.status}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          Call
+        </Link>
+        <ParcelStatusAction
+          options={parcel.nextStatuses}
+          trackingNumber={parcel.trackingNumber}
+        />
       </ItemFooter>
     </Item>
   );
 };
+
+export default ParcelItem;
