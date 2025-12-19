@@ -71,31 +71,6 @@ export interface Parcel {
 
 export type FindParcelsResponse = PaginatedResponse<Parcel>;
 
-export interface FindGeoNearParcelResponse extends SuccessResponse {
-  data: {
-    parcels: {
-      _id: string;
-      display: {
-        trackingNumber: string;
-        size: string;
-        paymentType: string;
-        agentId: string;
-        agentName: string;
-        agentInfo: {
-          familyName: string;
-          givenName: string;
-          email: string;
-          avatar: {
-            url: string;
-          };
-        };
-        distance: number;
-        distanceUnit: string;
-      };
-    }[];
-  };
-}
-
 export interface FindOneAndUpdateAssignParcel {
   parcelId: string;
   agentId: string;
