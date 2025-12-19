@@ -1,6 +1,7 @@
 import { apiSlice } from '../../api/api';
 import {
   FindPaymentTypeMetricsResponse,
+  FindProfitLossMetricsResponse,
   FindStatusDistributionMetricsResponse,
   FindStatusMonthlyMetricsResponse,
 } from './types';
@@ -58,6 +59,21 @@ export const metricsApi = apiSlice.injectEndpoints({
       }),
       providesTags: ['ProfitLossMonthlyMetrics'],
     }),
+
+    findProfitLossMetrics: builder.query<
+      FindProfitLossMetricsResponse,
+      { from?: string; to?: string } | undefined
+    >({
+      query: (date) => ({
+        url: `/analytics/admin/metrics/parcel/profit/lose`,
+        method: 'GET',
+        params: {
+          from: date?.from,
+          to: date?.to,
+        },
+      }),
+      providesTags: ['ProfitLossMetrics'],
+    }),
   }),
 });
 
@@ -66,4 +82,5 @@ export const {
   useFindStatusDistributionMetricsQuery,
   useFindStatusMonthlyMetricsQuery,
   useFindProfitLossMonthlyMetricsQuery,
+  useFindProfitLossMetricsQuery,
 } = metricsApi;

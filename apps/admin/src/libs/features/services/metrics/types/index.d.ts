@@ -42,3 +42,21 @@ export interface FindProfitLossMonthlyMetricsResponse extends SuccessResponse {
     }[];
   };
 }
+
+export interface FindProfitLossMetricsResponse extends SuccessResponse {
+  data: {
+    metrics: {
+      summary: {
+        _id: string | null;
+        totalParcels: number;
+        profit: number;
+        lose: number;
+        successRate: number;
+      };
+      totalParcelsTimeline: { date: string; totalParcels: number }[];
+      profitTimeline: { date: string; profit: number }[];
+      loseTimeline: { date: string; lose: number }[];
+      successRateTimeline: { date: string; successRate: number }[];
+    };
+  };
+}
