@@ -3,6 +3,7 @@ import { GetQueryParams, SuccessResponse } from '../../types/api-response';
 import {
   FindGeoNearParcelResponse,
   FindOneAndUpdateAssignParcel,
+  FindOneParcel,
   FindParcelsResponse,
 } from './types';
 
@@ -19,6 +20,14 @@ export const parcelApi = apiSlice.injectEndpoints({
         return { url, method: 'GET' };
       },
       providesTags: ['Parcels'],
+    }),
+
+    findOneParcel: builder.query<FindOneParcel, string>({
+      query: (id) => ({
+        url: `/parcel/admin/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Parcel'],
     }),
 
     findGeoNearParcel: builder.query<FindGeoNearParcelResponse, void>({
@@ -38,6 +47,8 @@ export const parcelApi = apiSlice.injectEndpoints({
         method: 'PATCH',
       }),
       invalidatesTags: [
+        'Parcels',
+        'Parcel',
         'ParcelsGeoNear',
         'AvailableAgent',
         'StatsMetrics',
@@ -54,6 +65,8 @@ export const parcelApi = apiSlice.injectEndpoints({
           method: 'PATCH',
         }),
         invalidatesTags: [
+          'Parcels',
+          'Parcel',
           'ParcelsGeoNear',
           'AvailableAgent',
           'StatsMetrics',
@@ -68,6 +81,7 @@ export const parcelApi = apiSlice.injectEndpoints({
 
 export const {
   useFindParcelsQuery,
+  useFindOneParcelQuery,
   useFindGeoNearParcelQuery,
   useFindOneAndUpdateAssignParcelMutation,
   useFindOneAndUpdateAssignAutoParcelMutation,

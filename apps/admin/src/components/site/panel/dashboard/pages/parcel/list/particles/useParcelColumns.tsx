@@ -5,10 +5,12 @@ import { paymentClass, PaymentType } from '@/utils/paymentClass';
 import { PaymentStatus, paymentStatusClass } from '@/utils/paymentStatusClass';
 import { ParcelStatus, statusClass } from '@/utils/statusClass';
 import { Badge } from '@repo/ui/components/badge';
-import { Button } from '@repo/ui/components/button';
+import { buttonVariants } from '@repo/ui/components/button';
 import { IndeterminateCheckbox, RowPin } from '@repo/ui/data-grid/index';
+import { cn } from '@repo/ui/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import { Eye } from 'lucide-react';
+import Link from 'next/link';
 import { useMemo } from 'react';
 import ExportInvoice from './ExportInvoice';
 
@@ -41,9 +43,16 @@ const useParcelColumns = (): ColumnDef<Parcel>[] => {
         ),
         cell: ({ row }) => (
           <div className="flex items-center gap-2">
-            <Button size="icon" variant="outline" className="size-5 rounded">
+            <Link
+              href={`/account/dashboard/parcel/details/${row.original._id}`}
+              className={cn(
+                buttonVariants({ size: 'icon-sm', variant: 'outline' }),
+                'size-5 rounded',
+              )}
+            >
               <Eye />
-            </Button>
+            </Link>
+
             <ExportInvoice id={row.original._id} />
           </div>
         ),
@@ -186,13 +195,6 @@ const useParcelColumns = (): ColumnDef<Parcel>[] => {
             accessorKey: 'deliveryAddress.state',
             id: 'deliveryAddress.state',
             header: 'State',
-            enableHiding: true,
-            meta: { filterVariant: 'select' },
-          },
-          {
-            accessorKey: 'deliveryAddress.country',
-            id: 'deliveryAddress.country',
-            header: 'Country',
             enableHiding: true,
             meta: { filterVariant: 'select' },
           },

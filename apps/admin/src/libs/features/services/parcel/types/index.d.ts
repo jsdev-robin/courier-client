@@ -100,3 +100,93 @@ export interface FindOneAndUpdateAssignParcel {
   parcelId: string;
   agentId: string;
 }
+
+export interface CustomerPersonalInfo {
+  familyName: string;
+  givenName: string;
+  email: string;
+  phone: string;
+  avatar: {
+    public_id: string;
+    url: string;
+  };
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    coordinates: [string, string];
+  };
+}
+
+export interface ParcelCustomer {
+  personalInfo: CustomerPersonalInfo;
+}
+
+export interface ParcelDeliveryAddress {
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  postalCode: string;
+  location: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
+  contactName: string;
+  contactPhone: string;
+}
+
+export interface ParcelDetails {
+  size: string;
+  weight: number;
+  type: string;
+  description?: string;
+}
+
+export interface ParcelPayment {
+  type: string;
+  amount: number;
+  codAmount?: number;
+  status: string;
+}
+
+export interface ParcelTrackingHistory {
+  status: string;
+  timestamp: string;
+  notes?: string;
+}
+
+export interface AssignedAgent {
+  personalInfo: {
+    familyName: string;
+    givenName: string;
+    email: string;
+    phone: string;
+    avatar: {
+      url: string;
+    };
+  };
+}
+
+export interface FindOneParcelItem {
+  _id: string;
+  trackingNumber: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  qrCode: string;
+  barcode: string;
+  customer: ParcelCustomer;
+  deliveryAddress: ParcelDeliveryAddress;
+  parcelDetails: ParcelDetails;
+  payment: ParcelPayment;
+  trackingHistory: ParcelTrackingHistory[];
+  assignedAgent?: AssignedAgent;
+}
+
+export interface FindOneParcel extends SuccessResponse {
+  data: {
+    parcel: FindOneParcelItem;
+  };
+}
