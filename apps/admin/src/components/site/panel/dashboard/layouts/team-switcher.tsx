@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Box } from "lucide-react";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@repo/ui/components/sidebar";
+} from '@repo/ui/components/sidebar';
+import { Box } from 'lucide-react';
 
 export function TeamSwitcher() {
   return (
@@ -21,7 +20,7 @@ export function TeamSwitcher() {
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">Munza</span>
-            <span className="truncate text-xs">Seller</span>
+            <span className="truncate text-xs">Admin</span>
           </div>
         </SidebarMenuButton>
       </SidebarMenuItem>

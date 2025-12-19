@@ -104,6 +104,10 @@ export const apiSlice = createApi({
     'Last7DaysMetrics',
     'MapMetrics',
     'TodayStatusDistributionMetrics',
+    'RangePaymentMetrics',
+    'RangeStatusMetrics',
+    'StatusMonthlyMetrics',
+    'ProfitLossMonthlyMetrics',
   ],
   endpoints: () => ({}),
 });
