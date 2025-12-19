@@ -9,7 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@repo/ui/components/breadcrumb';
-import { Button, buttonVariants } from '@repo/ui/components/button';
+import { Button } from '@repo/ui/components/button';
 import {
   Card,
   CardAction,
@@ -20,7 +20,6 @@ import {
 } from '@repo/ui/components/card';
 import { Table, useDataGridQuery } from '@repo/ui/data-grid/index';
 import { useFileDownload } from '@repo/ui/hooks/useFileDownload';
-import { cn } from '@repo/ui/lib/utils';
 import Link from 'next/link';
 import { useCallback } from 'react';
 import useParcelColumns from './particles/useParcelColumns';
@@ -69,18 +68,12 @@ const ParcelList = () => {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <Link
-              href="/account/dashboard/brand/create"
-              className={cn(buttonVariants({ size: 'sm' }))}
-            >
-              Add Brand
-            </Link>
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Brand Management</CardTitle>
+              <CardTitle>Parcel Management</CardTitle>
               <CardDescription>
-                View and manage all product brands.
+                View and manage all product Parcel.
               </CardDescription>
               <CardAction>
                 <Button variant="outline" onClick={() => handleExportExcel()}>

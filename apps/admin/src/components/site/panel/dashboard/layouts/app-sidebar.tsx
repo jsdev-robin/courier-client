@@ -7,7 +7,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@repo/ui/components/sidebar';
-import { Box } from 'lucide-react';
+import { Box, Users } from 'lucide-react';
 import * as React from 'react';
 import { NavMain } from './nav-main';
 import { NavUser } from './nav-user';
@@ -23,6 +23,17 @@ const data = {
         {
           title: 'List',
           url: '/account/dashboard/parcel/list',
+        },
+      ],
+    },
+    {
+      title: 'Agents',
+      url: '#',
+      icon: Users,
+      items: [
+        {
+          title: 'List',
+          url: '/account/dashboard/agent/list',
         },
       ],
     },

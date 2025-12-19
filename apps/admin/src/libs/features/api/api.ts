@@ -97,6 +97,7 @@ export const apiSlice = createApi({
     'Parcels',
     'Parcel',
     'ParcelsGeoNear',
+    'Agents',
     'AvailableAgent',
     'StatsMetrics',
     'Last7DaysMetrics',
