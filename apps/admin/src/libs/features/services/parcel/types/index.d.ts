@@ -142,6 +142,7 @@ export interface AssignedAgent {
       url: string;
     };
   };
+  _id: string;
 }
 
 export interface FindOneParcelItem {

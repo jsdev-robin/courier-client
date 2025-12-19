@@ -17,39 +17,41 @@ const ParcelDetails = () => {
     skip: !id,
   });
 
+  const parcel = data?.data.parcel;
+
   return (
     <section>
       <div className="wrapper">
-        <div className="grid gap-4 grid-cols-3">
-          <div className="col-span-2">
+        <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+          <div className="lg:col-span-2">
             <div className="space-y-4">
               <ParcelStatus
-                trackingNumber={data?.data.parcel.trackingNumber}
-                status={data?.data.parcel.status}
-                updatedAt={data?.data.parcel.updatedAt}
+                trackingNumber={parcel?.trackingNumber}
+                status={parcel?.status}
+                updatedAt={parcel?.updatedAt}
               />
-              <ParcelLiveTrackingMap />
+              <ParcelLiveTrackingMap
+                agentId={data?.data?.parcel?.assignedAgent?._id}
+              />
               <ParcelAddressDetails
-                deliveryAddress={data?.data.parcel.deliveryAddress}
-                customer={data?.data.parcel.customer}
+                deliveryAddress={parcel?.deliveryAddress}
+                customer={parcel?.customer}
               />
               <ParcelTrackingHistory
-                trackingHistory={data?.data.parcel.trackingHistory}
+                trackingHistory={parcel?.trackingHistory}
               />
             </div>
           </div>
-          <div className="col-span-1">
+          <div className="lg:col-span-1">
             <div className="space-y-4">
               <ParcelInfo
-                ParcelDetails={data?.data.parcel.parcelDetails}
-                qrCode={data?.data.parcel.qrCode}
-                barcode={data?.data.parcel.barcode}
+                ParcelDetails={parcel?.parcelDetails}
+                qrCode={parcel?.qrCode}
+                barcode={parcel?.barcode}
               />
-              <ParcelPaymentInfo payment={data?.data.parcel.payment} />
-              <ParcelAssignedAgent
-                assignedAgent={data?.data.parcel.assignedAgent}
-              />
-              <ParcelCustomerInfo customer={data?.data.parcel.customer} />
+              <ParcelPaymentInfo payment={parcel?.payment} />
+              <ParcelAssignedAgent assignedAgent={parcel?.assignedAgent} />
+              <ParcelCustomerInfo customer={parcel?.customer} />
             </div>
           </div>
         </div>
