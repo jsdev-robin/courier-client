@@ -57,7 +57,8 @@ const AvailableAgent = () => {
                     </Badge>
                   </ItemTitle>
                   <ItemDescription>
-                    {item.todayParcels} parcels today
+                    {item.todayParcels} parcels today ({item.totalParcels}{' '}
+                    total)
                   </ItemDescription>
                 </ItemContent>
               </Item>

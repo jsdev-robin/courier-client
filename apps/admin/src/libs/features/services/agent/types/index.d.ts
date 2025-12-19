@@ -40,11 +40,13 @@ export interface FindAvailableAgentResponse extends SuccessResponse {
       personalInfo: {
         familyName: string;
         givenName: string;
-        avatar?: {
+        avatar: {
+          public_id: string;
           url: string;
         };
       };
       todayParcels: number;
+      totalParcels: number;
     }[];
   };
 }
