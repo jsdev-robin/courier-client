@@ -1,7 +1,17 @@
-export default function Home() {
+import HomeCTA from '@/components/site/main/home/HomeCTA';
+import HomeHero from '@/components/site/main/home/HomeHero';
+import HomeHowItWork from '@/components/site/main/home/HomeHowItWork';
+import HomeWhyChoose from '@/components/site/main/home/HomeWhyChoose';
+
+const page = () => {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      d
-    </div>
+    <>
+      <HomeHero />
+      <HomeWhyChoose />
+      <HomeHowItWork />
+      <HomeCTA />
+    </>
   );
-}
+};
+
+export default page;
