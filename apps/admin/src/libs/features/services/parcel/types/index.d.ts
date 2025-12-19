@@ -190,3 +190,39 @@ export interface FindOneParcel extends SuccessResponse {
     parcel: FindOneParcelItem;
   };
 }
+
+export interface FindNearestResponse extends SuccessResponse {
+  data: {
+    limit: number;
+    total: number;
+    parcels: {
+      _id: string;
+      display: {
+        trackingNumber: string;
+        size: string;
+        paymentType: string;
+        agentId: string;
+        agentName: string;
+        agentInfo: {
+          familyName: string;
+          givenName: string;
+          email: string;
+          phone: string;
+          avatar: {
+            public_id: string;
+            url: string;
+          };
+          address: {
+            street: string;
+            city: string;
+            state: string;
+            postalCode: string;
+            coordinates: [string, string];
+          };
+        };
+        distance: number;
+        distanceUnit: string;
+      };
+    }[];
+  };
+}

@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@repo/ui/components/card';
+import { Spinner } from '@repo/ui/components/spinner';
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
   DEFAULT_SUCCESS_MESSAGE,
@@ -22,13 +23,16 @@ import BookedNearestParcels from './BookedNearestParcels';
 const UnassignedParcelList = () => {
   const [id, setId] = useState<string>();
 
-  const [findOneAndUpdateAssignAutoParcel] =
+  const [findOneAndUpdateAssignAutoParcel, { isLoading }] =
     useFindOneAndUpdateAssignAutoParcelMutation();
 
   const handleAutoAssignParcel = async (id: string) => {
     await toast.promise(findOneAndUpdateAssignAutoParcel(id).unwrap(), {
       loading: 'Auto Assigning parcel...',
-      success: (res) => res.message || DEFAULT_SUCCESS_MESSAGE,
+      success: (res) => {
+        setId('');
+        return res.message || DEFAULT_SUCCESS_MESSAGE;
+      },
       error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
     });
   };
@@ -37,11 +41,14 @@ const UnassignedParcelList = () => {
     <Card>
       <CardHeader>
         <CardTitle>Agent Assignment Center</CardTitle>
-        <CardDescription>Drag & drop parcels to assign agents</CardDescription>
+        <CardDescription>
+          Manage and assign parcels to agents quickly and efficiently. Today's
+          unassigned parcels are listed for immediate action.
+        </CardDescription>
         {id && (
           <CardAction>
             <AiButton onClick={() => handleAutoAssignParcel(id)}>
-              AI-Powered Assign
+              {isLoading && <Spinner className="mr-2" />}AI-Powered Assign
             </AiButton>
           </CardAction>
         )}

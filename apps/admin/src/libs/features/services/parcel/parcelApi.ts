@@ -1,7 +1,7 @@
 import { apiSlice } from '../../api/api';
 import { GetQueryParams, SuccessResponse } from '../../types/api-response';
 import {
-  FindGeoNearParcelResponse,
+  FindNearestResponse,
   FindOneAndUpdateAssignParcel,
   FindOneParcel,
   FindParcelsResponse,
@@ -30,12 +30,20 @@ export const parcelApi = apiSlice.injectEndpoints({
       providesTags: ['Parcel'],
     }),
 
-    findGeoNearParcel: builder.query<FindGeoNearParcelResponse, void>({
-      query: () => ({
-        url: `/parcel/admin/near`,
+    findNearestTodayParcel: builder.query<FindNearestResponse, number>({
+      query: (page = 10) => ({
+        url: `/parcel/admin/near/today?page=${page}`,
         method: 'GET',
       }),
-      providesTags: ['ParcelsGeoNear'],
+      providesTags: ['NearestToday'],
+    }),
+
+    findNearestParcel: builder.query<FindNearestResponse, number>({
+      query: (page = 10) => ({
+        url: `/parcel/admin/near?page=${page}`,
+        method: 'GET',
+      }),
+      providesTags: ['Nearest'],
     }),
 
     findOneAndUpdateAssignParcel: builder.mutation<
@@ -49,8 +57,9 @@ export const parcelApi = apiSlice.injectEndpoints({
       invalidatesTags: [
         'Parcels',
         'Parcel',
-        'ParcelsGeoNear',
         'AvailableAgent',
+        'NearestToday',
+        'Nearest',
         'StatsMetrics',
         'Last7DaysMetrics',
         'MapMetrics',
@@ -67,8 +76,9 @@ export const parcelApi = apiSlice.injectEndpoints({
         invalidatesTags: [
           'Parcels',
           'Parcel',
-          'ParcelsGeoNear',
           'AvailableAgent',
+          'NearestToday',
+          'Nearest',
           'StatsMetrics',
           'Last7DaysMetrics',
           'MapMetrics',
@@ -80,9 +90,10 @@ export const parcelApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useFindNearestTodayParcelQuery,
+  useFindNearestParcelQuery,
   useFindParcelsQuery,
   useFindOneParcelQuery,
-  useFindGeoNearParcelQuery,
   useFindOneAndUpdateAssignParcelMutation,
   useFindOneAndUpdateAssignAutoParcelMutation,
 } = parcelApi;
