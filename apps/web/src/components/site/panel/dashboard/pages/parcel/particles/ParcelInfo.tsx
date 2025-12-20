@@ -46,9 +46,9 @@ const ParcelInfo: React.FC<ParcelInfoProps> = ({
             </ItemActions>
           </Item>
           <Item className="px-0" size="sm">
-            <ItemContent>Type</ItemContent>
+            <ItemContent>Category</ItemContent>
             <ItemActions className="font-semibold">
-              {ParcelDetails?.type}
+              {ParcelDetails?.category}
             </ItemActions>
           </Item>
           <Item className="px-0 pb-0" size="sm">

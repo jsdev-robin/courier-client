@@ -26,8 +26,10 @@ const ParcelPaymentInfo: React.FC<ParcelPaymentInfoProps> = ({ payment }) => {
       <CardContent>
         <ItemGroup>
           <Item className="px-0 pt-0" size="sm">
-            <ItemContent>Payment Type</ItemContent>
-            <ItemActions className="font-semibold">{payment?.type}</ItemActions>
+            <ItemContent>Payment method</ItemContent>
+            <ItemActions className="font-semibold">
+              {payment?.method}
+            </ItemActions>
           </Item>
           <Item className="px-0" size="sm">
             <ItemContent>Amount</ItemContent>
