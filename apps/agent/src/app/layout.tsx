@@ -3,6 +3,7 @@ import '@repo/ui/globals.css';
 import { cn } from '@repo/ui/lib/utils';
 import type { Metadata } from 'next';
 import { Inter, Merriweather, Poppins, Roboto } from 'next/font/google';
+import { LocationSharingRoomProvider } from '../contexts/LocationSharingRoomContext';
 import { Providers } from '../contexts/NextThemesProvider';
 import { StreamLiveLocationProvider } from '../contexts/StreamLiveLocation';
 import './grid.css';
@@ -96,7 +97,11 @@ export default function RootLayout({
       >
         <Providers>
           <StoreProvider>
-            <StreamLiveLocationProvider>{children}</StreamLiveLocationProvider>
+            <StreamLiveLocationProvider>
+              <LocationSharingRoomProvider>
+                {children}
+              </LocationSharingRoomProvider>
+            </StreamLiveLocationProvider>
           </StoreProvider>
           <Toaster position="bottom-right" richColors />
         </Providers>

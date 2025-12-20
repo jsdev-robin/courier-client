@@ -49,10 +49,13 @@ const LiveTrackingMap = () => {
     <Map center={[23.8617, 90.0003]} zoom={7} className="min-h-[80vh]">
       <MapTileLayer />
       <MapZoomControl />
-      {agents.map((agentData) => (
+      {agents?.map((agentData, i) => (
         <MapMarker
-          key={agentData.agent.id}
-          position={[agentData.location.latitude, agentData.location.longitude]}
+          key={i}
+          position={[
+            agentData?.location?.latitude,
+            agentData?.location?.longitude,
+          ]}
           icon={<Car className="fill-blue-500" />}
         >
           <MapTooltip side="bottom">
@@ -61,16 +64,18 @@ const LiveTrackingMap = () => {
                 <strong>{agentData.agent.fullName}</strong>
                 {agentData.agent.avatar && (
                   <Avatar className="size-5">
-                    <AvatarImage src={agentData.agent.avatar.url} />
-                    <AvatarFallback>{agentData.agent.fullName}</AvatarFallback>
+                    <AvatarImage src={agentData?.agent?.avatar?.url} />
+                    <AvatarFallback>
+                      {agentData?.agent?.fullName}
+                    </AvatarFallback>
                   </Avatar>
                 )}
               </div>
-              Email: {agentData.agent.email}
+              Email: {agentData?.agent?.email}
               <br />
-              Phone: {agentData.agent.phone}
+              Phone: {agentData?.agent?.phone}
               <br />
-              Vehicle Speed: {agentData.speed} km/h
+              Vehicle Speed: {agentData?.speed} km/h
             </div>
           </MapTooltip>
         </MapMarker>

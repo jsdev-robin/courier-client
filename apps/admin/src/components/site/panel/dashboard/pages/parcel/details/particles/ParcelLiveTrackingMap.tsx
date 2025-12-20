@@ -19,12 +19,23 @@ import { useEffect, useState } from 'react';
 import MapAutoMove from '../../../../../../../../utils/MapAutoMove';
 
 interface GpsSpeedData {
-  position: { lat: number; lng: number };
+  location: {
+    latitude: number;
+    longitude: number;
+  };
   speed: number;
-  member: string;
+  agent: {
+    id: string;
+    fullName?: string;
+    email?: string;
+    phone?: string;
+    avatar: {
+      url: string;
+    };
+  };
 }
 
-const agentSocket = createSocket('agent/stream/location');
+const agentSocket = createSocket('agent/sharing/location');
 
 const ParcelLiveTrackingMap = ({
   agentId,
@@ -32,15 +43,18 @@ const ParcelLiveTrackingMap = ({
   agentId: string | undefined;
 }) => {
   const [agentLocation, setAgentLocation] = useState<GpsSpeedData | null>(null);
+
+  console.log(agentLocation);
+
   useEffect(() => {
     if (agentId) {
       agentSocket.connect();
-      agentSocket.emit('joinAdminRoom', `agentId/${agentId}`);
-      agentSocket.on(`agentId/${agentId}`, (data: GpsSpeedData) => {
+      agentSocket.emit('joinAdminRoom', `${agentId}`);
+      agentSocket.on(`${agentId}`, (data: GpsSpeedData) => {
         setAgentLocation(data);
       });
       return () => {
-        agentSocket.off(`agentId/${agentId}`);
+        agentSocket.off(`${agentId}`);
         agentSocket.disconnect();
       };
     }
@@ -53,17 +67,17 @@ const ParcelLiveTrackingMap = ({
       </CardHeader>
       <CardContent>
         <Map center={[23.8617, 90.0003]} zoom={7}>
-          {agentLocation?.position && (
+          {agentLocation?.location && (
             <>
               <MapAutoMove
-                lat={Number(agentLocation?.position.lat)}
-                lng={Number(agentLocation?.position.lng)}
+                lat={Number(agentLocation.location.latitude)}
+                lng={Number(agentLocation.location.longitude)}
                 zoom={14}
               />
               <MapMarker
                 position={[
-                  Number(agentLocation?.position.lat),
-                  Number(agentLocation?.position.lng),
+                  Number(agentLocation.location.latitude),
+                  Number(agentLocation.location.longitude),
                 ]}
                 icon={<Car className="text-blue-500" />}
               >
