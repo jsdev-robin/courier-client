@@ -26,7 +26,15 @@ export const parcelAnalyticsApi = apiSlice.injectEndpoints({
       providesTags: ['Last7DaysMetrics'],
     }),
 
-    findMapMetricsParcel: builder.query<FindMapMetricsResponse, void>({
+    findMapMetricsToday: builder.query<FindMapMetricsResponse, void>({
+      query: () => ({
+        url: `/analytics/admin/parcel/metrics/locations/today`,
+        method: 'GET',
+      }),
+      providesTags: ['MapMetricsToday'],
+    }),
+
+    findMapMetrics: builder.query<FindMapMetricsResponse, void>({
       query: () => ({
         url: `/analytics/admin/parcel/metrics/locations`,
         method: 'GET',
@@ -50,6 +58,7 @@ export const parcelAnalyticsApi = apiSlice.injectEndpoints({
 export const {
   useFindStatsMetricsParcelQuery,
   useFindLast7DaysMetricsParcelQuery,
-  useFindMapMetricsParcelQuery,
+  useFindMapMetricsTodayQuery,
+  useFindMapMetricsQuery,
   useFindTodayStatusDistributionMetricsParcelQuery,
 } = parcelAnalyticsApi;

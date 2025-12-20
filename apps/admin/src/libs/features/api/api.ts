@@ -102,6 +102,7 @@ export const apiSlice = createApi({
     'AvailableAgent',
     'StatsMetrics',
     'Last7DaysMetrics',
+    'MapMetricsToday',
     'MapMetrics',
     'TodayStatusDistributionMetrics',
     'RangePaymentMetrics',
