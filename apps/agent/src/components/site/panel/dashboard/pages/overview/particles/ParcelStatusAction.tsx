@@ -15,7 +15,7 @@ const ParcelStatusAction = ({
   options: { status: string }[];
   trackingNumber: string;
 }) => {
-  const [findOneAndUpdateStatusParcel, { isSuccess }] =
+  const [findOneAndUpdateStatusParcel] =
     useFindOneAndUpdateStatusParcelMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

@@ -24,8 +24,7 @@ interface BookedNearestParcelsProps {
 
 const NearestParcel: React.FC<BookedNearestParcelsProps> = ({ id, setId }) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError, isFetching } =
-    useFindNearestParcelQuery(page);
+  const { data, isLoading, isError } = useFindNearestParcelQuery(page);
 
   const total = data?.data.total;
   const limit = data?.data.limit;

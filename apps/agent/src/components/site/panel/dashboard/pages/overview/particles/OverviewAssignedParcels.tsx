@@ -28,7 +28,7 @@ const OverviewAssignedParcels = () => {
     <Card>
       <CardHeader>
         <CardTitle>Assigned Parcels</CardTitle>
-        <CardDescription>Today's delivery schedule</CardDescription>
+        <CardDescription>Today&lsquo;s delivery schedule</CardDescription>
       </CardHeader>
       <CardContent>
         <ItemGroup className="gap-2">

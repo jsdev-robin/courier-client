@@ -23,7 +23,7 @@ const TodaysPerformance = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Today's Performance</CardTitle>
+        <CardTitle>Today&lsquo;s Performance</CardTitle>
         <CardDescription>Shift: {performance?.shift.display}</CardDescription>
         <CardAction>
           {performance?.shift.isActive ? (
@@ -59,7 +59,7 @@ const TodaysPerformance = () => {
             <div className="space-y-4">
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs">Today's Target</span>
+                  <span className="text-xs">Today&lsquo;s Target</span>
                   <span className="text-xs">100%</span>
                 </div>
                 <Progress
@@ -105,7 +105,7 @@ const TodaysPerformance = () => {
               </Heading>
             </div>
             <div className="space-y-px text-right">
-              <span className="text-xs">Today's Commission</span>
+              <span className="text-xs">Today&lsquo;s Commission</span>
               <Heading as="h6">
                 {performance?.todayCommission.value} BDT
               </Heading>

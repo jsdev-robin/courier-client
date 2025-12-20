@@ -21,7 +21,6 @@ import {
 import { Table, useDataGridQuery } from '@repo/ui/data-grid/index';
 import { useFileDownload } from '@repo/ui/hooks/useFileDownload';
 import Link from 'next/link';
-import { useCallback } from 'react';
 import useParcelColumns from './particles/useParcelColumns';
 
 const ParcelList = () => {
@@ -30,15 +29,6 @@ const ParcelList = () => {
   const { downloadFile } = useFileDownload();
 
   const { data, isError, isLoading } = useFindParcelsQuery(queryArgs);
-
-  const handleExportInvoice = useCallback(() => {
-    downloadFile({
-      url: `http://localhost:8001/api/v1/parcel/admin/parcel/export/pdf/6941a3180ccf96386a0730fc`,
-      fileName: 'report.pdf',
-      fileType: 'application/pdf',
-      refreshTokenUrl: 'http://localhost:8001/api/v1/auth/admin/refresh-token',
-    });
-  }, [downloadFile]);
 
   const handleExportExcel = () => {
     downloadFile({

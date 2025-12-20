@@ -1,6 +1,5 @@
 'use client';
 
-import { useDisconnectOauthMutation } from '@/libs/features/services/auth/authApi';
 import useUser from '@/store/useUser';
 import { buttonVariants } from '@repo/ui/components/button';
 import {
@@ -28,13 +27,8 @@ import {
   XformerlyTwitter,
 } from '@repo/ui/icons/index';
 import { cn } from '@repo/ui/lib/utils';
-import {
-  DEFAULT_SERVER_ERROR_MESSAGE,
-  DEFAULT_SUCCESS_MESSAGE,
-} from '@repo/ui/utils/contants';
 import { Mail, RectangleEllipsis, UserLock } from 'lucide-react';
 import Link from 'next/link';
-import { toast } from 'sonner';
 
 const oauthProviders = [
   { name: 'Google', key: 'google', icon: <Google /> },
@@ -46,19 +40,6 @@ const oauthProviders = [
 
 const SignInMethods = () => {
   const user = useUser();
-  const [disconnectOauth, { isLoading }] = useDisconnectOauthMutation();
-
-  const handleDisconnect = async (provider: string, email: string) => {
-    toast.promise(disconnectOauth({ provider, email }).unwrap(), {
-      loading: `Disconnecting ${provider}...`,
-      success: () => {
-        return (
-          `Successfully disconnected ${provider}` || DEFAULT_SUCCESS_MESSAGE
-        );
-      },
-      error: (err) => err?.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
-    });
-  };
 
   return (
     <section>

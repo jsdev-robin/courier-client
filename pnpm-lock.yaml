@@ -241,6 +241,9 @@ importers:
       '@types/leaflet-routing-machine':
         specifier: ^3.2.9
         version: 3.2.9
+      '@types/lodash.debounce':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/node':
         specifier: ^20
         version: 20.19.27
@@ -256,6 +259,9 @@ importers:
       eslint-config-next:
         specifier: 15.5.9
         version: 15.5.9(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.2)
+      lodash.debounce:
+        specifier: ^4.0.8
+        version: 4.0.8
       tailwindcss:
         specifier: ^4
         version: 4.1.18

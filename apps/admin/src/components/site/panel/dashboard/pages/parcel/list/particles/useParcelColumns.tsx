@@ -86,7 +86,7 @@ const useParcelColumns = (): ColumnDef<Parcel>[] => {
       {
         accessorKey: 'status',
         id: 'status',
-        cell: ({ row, getValue }) => (
+        cell: ({ row }) => (
           <Badge className={statusClass[row.original.status as ParcelStatus]}>
             {row.original.status}
           </Badge>

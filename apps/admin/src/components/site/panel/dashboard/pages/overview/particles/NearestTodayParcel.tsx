@@ -27,8 +27,7 @@ const NearestTodayParcel: React.FC<BookedNearestParcelsProps> = ({
   setId,
 }) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError, isFetching } =
-    useFindNearestTodayParcelQuery(page);
+  const { data, isLoading, isError } = useFindNearestTodayParcelQuery(page);
 
   const total = data?.data.total;
   const limit = data?.data.limit;

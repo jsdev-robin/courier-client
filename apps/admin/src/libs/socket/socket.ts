@@ -2,7 +2,7 @@ import { io, type Socket } from 'socket.io-client';
 
 const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://api.devmun.xyz'
+    ? 'https://syc-3u4y.onrender.com'
     : 'http://localhost:8004';
 
 export const createSocket = (namespace: string): Socket =>

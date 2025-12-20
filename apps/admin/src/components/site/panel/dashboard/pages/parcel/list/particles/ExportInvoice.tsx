@@ -14,7 +14,7 @@ const ExportInvoice = ({ id }: { id: string }) => {
       fileType: 'application/pdf',
       refreshTokenUrl: 'http://localhost:8001/api/v1/auth/admin/refresh-token',
     });
-  }, [downloadFile]);
+  }, [downloadFile, id]);
 
   return (
     <Button

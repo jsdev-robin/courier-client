@@ -42,8 +42,8 @@ const UnassignedParcelList = () => {
       <CardHeader>
         <CardTitle>Agent Assignment Center</CardTitle>
         <CardDescription>
-          Manage and assign parcels to agents quickly and efficiently. Today's
-          unassigned parcels are listed for immediate action.
+          Manage and assign parcels to agents quickly and efficiently.
+          Today&rsquo;s unassigned parcels are listed for immediate action.
         </CardDescription>
         {id && (
           <CardAction>
