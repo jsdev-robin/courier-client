@@ -35,6 +35,10 @@ const data = {
           title: 'List',
           url: '/account/dashboard/agent/list',
         },
+        {
+          title: 'Live Tracking',
+          url: '/account/dashboard/agent/tracking',
+        },
       ],
     },
     {

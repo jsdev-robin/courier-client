@@ -4,6 +4,7 @@ import { cn } from '@repo/ui/lib/utils';
 import type { Metadata } from 'next';
 import { Inter, Merriweather, Poppins, Roboto } from 'next/font/google';
 import { Providers } from '../contexts/NextThemesProvider';
+import { StreamLiveLocationProvider } from '../contexts/StreamLiveLocation';
 import './grid.css';
 import StoreProvider from './StoreProvider';
 
@@ -94,7 +95,9 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <StoreProvider>{children}</StoreProvider>
+          <StoreProvider>
+            <StreamLiveLocationProvider>{children}</StreamLiveLocationProvider>
+          </StoreProvider>
           <Toaster position="bottom-right" richColors />
         </Providers>
       </body>
