@@ -54,7 +54,11 @@ const ParcelAssignAction = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" disabled={isError || isLoading}>
+        <Button
+          variant="outline"
+          size="icon-sm"
+          disabled={isError || isLoading}
+        >
           <EllipsisVertical />
         </Button>
       </DropdownMenuTrigger>

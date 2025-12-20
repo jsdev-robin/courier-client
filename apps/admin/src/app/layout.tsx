@@ -4,6 +4,8 @@ import { cn } from '@repo/ui/lib/utils';
 import type { Metadata } from 'next';
 import { Inter, Merriweather, Poppins, Roboto } from 'next/font/google';
 import { Providers } from '../contexts/NextThemesProvider';
+import { ParcelRefetchStreamProvider } from '../contexts/ParcelRefetchStreamContext';
+import { ParcelStreamProvider } from '../contexts/ParcelStreamContext';
 import './grid.css';
 import StoreProvider from './StoreProvider';
 
@@ -94,7 +96,13 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <StoreProvider>{children}</StoreProvider>
+          <StoreProvider>
+            <ParcelStreamProvider>
+              <ParcelRefetchStreamProvider>
+                {children}
+              </ParcelRefetchStreamProvider>
+            </ParcelStreamProvider>
+          </StoreProvider>
           <Toaster position="bottom-right" richColors />
         </Providers>
       </body>
