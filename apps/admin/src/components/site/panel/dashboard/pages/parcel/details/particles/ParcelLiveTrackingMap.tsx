@@ -81,21 +81,21 @@ const ParcelLiveTrackingMap = ({
           {agentLocation?.location && (
             <>
               <MapAutoMove
-                lat={Number(agentLocation.location.latitude)}
-                lng={Number(agentLocation.location.longitude)}
+                lat={Number(agentLocation?.location?.latitude)}
+                lng={Number(agentLocation?.location?.longitude)}
                 zoom={14}
               />
               <MapMarker
                 position={[
-                  Number(agentLocation.location.latitude),
-                  Number(agentLocation.location.longitude),
+                  Number(agentLocation?.location?.latitude),
+                  Number(agentLocation?.location?.longitude),
                 ]}
                 icon={<Car className="text-blue-500" />}
               >
                 <MapTooltip side="bottom">
                   <div>
                     <div className="flex items-center gap-2">
-                      <strong>{agentLocation.agent.fullName}</strong>
+                      <strong>{agentLocation?.agent?.fullName}</strong>
                       {agentLocation.agent.avatar && (
                         <Avatar className="size-5">
                           <AvatarImage

@@ -2,6 +2,7 @@
 
 import { useFindOneParcelQuery } from '@/libs/features/services/parcel/parcelApi';
 import { useParams } from 'next/navigation';
+import Loading from '../../../../../../../app/loading';
 import ParcelAddressDetails from './particles/ParcelAddressDetails';
 import ParcelAssignedAgent from './particles/ParcelAssignedAgent';
 import ParcelCustomerInfo from './particles/ParcelCustomerInfo';
@@ -13,11 +14,15 @@ import ParcelTrackingHistory from './particles/ParcelTrackingHistory';
 
 const ParcelDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const { data } = useFindOneParcelQuery(id, {
+  const { data, isLoading } = useFindOneParcelQuery(id, {
     skip: !id,
   });
 
   const parcel = data?.data.parcel;
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <section>

@@ -32,7 +32,7 @@ const ParcelList = () => {
 
   const handleExportExcel = () => {
     downloadFile({
-      url: `http://localhost:8001/api/v1/parcel/admin/csv`,
+      url: `http://localhost:8001/api/v1/resources/export/admin/excel`,
       fileName: 'parcels.xlsx',
       fileType:
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
