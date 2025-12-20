@@ -1,6 +1,16 @@
 'use client';
 
+import {
+  ParcelCustomer,
+  ParcelDeliveryAddress,
+} from '@/libs/features/services/parcel/types';
 import { createSocket } from '@/libs/socket/socket';
+import MapAutoMove from '@/utils/MapAutoMove';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@repo/ui/components/avatar';
 import {
   Card,
   CardContent,
@@ -10,13 +20,12 @@ import {
 import {
   Map,
   MapMarker,
-  MapPopup,
   MapTileLayer,
+  MapTooltip,
   MapZoomControl,
 } from '@repo/ui/components/map';
-import { Car } from 'lucide-react';
+import { Car, Handbag, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import MapAutoMove from '../../../../../../../../utils/MapAutoMove';
 
 interface GpsSpeedData {
   location: {
@@ -39,12 +48,14 @@ const agentSocket = createSocket('agent/sharing/location');
 
 const ParcelLiveTrackingMap = ({
   agentId,
+  customer,
+  deliveryAddress,
 }: {
   agentId: string | undefined;
+  customer: ParcelCustomer | undefined;
+  deliveryAddress: ParcelDeliveryAddress | undefined;
 }) => {
   const [agentLocation, setAgentLocation] = useState<GpsSpeedData | null>(null);
-
-  console.log(agentLocation);
 
   useEffect(() => {
     if (agentId) {
@@ -81,10 +92,75 @@ const ParcelLiveTrackingMap = ({
                 ]}
                 icon={<Car className="text-blue-500" />}
               >
-                <MapPopup>A map component for shadcn/ui.</MapPopup>
+                <MapTooltip side="bottom">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <strong>{agentLocation.agent.fullName}</strong>
+                      {agentLocation.agent.avatar && (
+                        <Avatar className="size-5">
+                          <AvatarImage
+                            src={agentLocation?.agent?.avatar?.url}
+                          />
+                          <AvatarFallback>
+                            {agentLocation?.agent?.fullName}
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
+                    Email: {agentLocation?.agent?.email}
+                    <br />
+                    Phone: {agentLocation?.agent?.phone}
+                    <br />
+                    Vehicle Speed: {agentLocation?.speed} km/h
+                  </div>
+                </MapTooltip>
               </MapMarker>
             </>
           )}
+
+          <MapMarker
+            position={[
+              Number(customer?.personalInfo.address.coordinates[0]),
+              Number(customer?.personalInfo.address.coordinates[1]),
+            ]}
+            icon={<User className="text-blue-500" />}
+          >
+            <MapTooltip side="bottom">
+              <div>
+                <div className="flex items-center gap-2">
+                  <strong>
+                    {customer?.personalInfo.familyName}{' '}
+                    {customer?.personalInfo.givenName}
+                  </strong>
+                  {customer?.personalInfo?.avatar && (
+                    <Avatar className="size-5">
+                      <AvatarImage src={agentLocation?.agent?.avatar?.url} />
+                      <AvatarFallback>
+                        {agentLocation?.agent?.fullName}
+                      </AvatarFallback>
+                    </Avatar>
+                  )}
+                </div>
+                Email: {customer?.personalInfo?.email}
+                <br />
+                Phone: {customer?.personalInfo?.phone}
+              </div>
+            </MapTooltip>
+          </MapMarker>
+          <MapMarker
+            position={[
+              Number(deliveryAddress?.location.coordinates[0]),
+              Number(deliveryAddress?.location.coordinates[1]),
+            ]}
+            icon={<Handbag className="text-blue-500" />}
+          >
+            <MapTooltip side="bottom">
+              <div>
+                <strong>{deliveryAddress?.contactName} </strong>
+                Phone: {deliveryAddress?.contactPhone}
+              </div>
+            </MapTooltip>
+          </MapMarker>
           <MapTileLayer />
           <MapZoomControl />
         </Map>

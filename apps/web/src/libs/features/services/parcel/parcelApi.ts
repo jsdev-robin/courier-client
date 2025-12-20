@@ -17,9 +17,9 @@ export const parcelApi = apiSlice.injectEndpoints({
       invalidatesTags: ['Parcels', 'Parcel'],
     }),
 
-    findParcel: builder.query<FindParcelResponse, void>({
-      query: () => ({
-        url: `/parcel/customer`,
+    findParcel: builder.query<FindParcelResponse, number>({
+      query: (page) => ({
+        url: `/parcel/customer?page=${page}`,
         method: 'GET',
       }),
       providesTags: ['Parcels'],

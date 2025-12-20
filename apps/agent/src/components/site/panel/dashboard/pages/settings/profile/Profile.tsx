@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import ProfileCoordsMap from './particles/ProfileCoordsMap';
 import ProfileHeaderCard from './particles/ProfileHeaderCard';
 import ProfilePersonalInfoCard from './particles/ProfilePersonalInfoCard';
 
@@ -35,6 +36,13 @@ const Profile = () => {
         familyName: user?.personalInfo.familyName ?? '',
         givenName: user?.personalInfo.givenName ?? '',
         phone: user?.personalInfo.phone ?? '',
+        address: {
+          street: user?.personalInfo.address.street ?? '',
+          city: user?.personalInfo.address.city ?? '',
+          state: user?.personalInfo.address.state ?? '',
+          postalCode: user?.personalInfo.address.postalCode ?? '',
+          coordinates: user?.personalInfo.address.coordinates ?? [],
+        },
       },
     },
   });
@@ -54,7 +62,7 @@ const Profile = () => {
 
   return (
     <section>
-      <div className="wrapper">
+      <div className="container">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-6">
@@ -96,7 +104,17 @@ const Profile = () => {
               </div>
               <div className="space-y-4">
                 <ProfileHeaderCard form={form} isEditing={isEditing} />
-                <ProfilePersonalInfoCard form={form} isEditing={isEditing} />
+                <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
+                  <div className="lg:col-span-2">
+                    <ProfilePersonalInfoCard
+                      form={form}
+                      isEditing={isEditing}
+                    />
+                  </div>
+                  <div className="lg:col-span-1">
+                    <ProfileCoordsMap form={form} />
+                  </div>
+                </div>
               </div>
             </div>
           </form>

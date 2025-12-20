@@ -41,12 +41,12 @@ export interface ParcelDeliveryAddress {
 export interface ParcelDetails {
   size: string;
   weight: number;
-  type: string;
+  category: string;
   description?: string;
 }
 
 export interface ParcelPayment {
-  type: string;
+  method: string;
   amount: number;
   codAmount?: number;
   status: string;

@@ -22,33 +22,9 @@ import {
   ParcelStatus as ParcelStatusType,
   statusClass,
 } from '@/utils/statusClass';
-import {
-  Stepper,
-  StepperIndicator,
-  StepperItem,
-  StepperList,
-  StepperSeparator,
-  StepperTrigger,
-} from '@repo/ui/components/stepper';
+import { Progress } from '@repo/ui/components/progress';
 import { format, isToday } from 'date-fns';
-
-const steps = [
-  {
-    value: 'account',
-  },
-  {
-    value: 'profile',
-  },
-  {
-    value: 'payment',
-  },
-  {
-    value: 'complete',
-  },
-  {
-    value: '5',
-  },
-];
+import { parcelProgressMap } from '../../../../../../../utils/parcelProgressMap';
 
 interface ParcelStatusProps {
   trackingNumber: string | undefined;
@@ -61,6 +37,7 @@ const ParcelStatus: React.FC<ParcelStatusProps> = ({
   status,
   updatedAt,
 }) => {
+  const estimatedDelivery = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
   return (
     <Card>
       <CardHeader>
@@ -81,18 +58,19 @@ const ParcelStatus: React.FC<ParcelStatusProps> = ({
         </CardAction>
       </CardHeader>
       <CardContent>
-        <Stepper defaultValue="account" className="w-full">
-          <StepperList>
-            {steps.map((step) => (
-              <StepperItem key={step.value} value={step.value}>
-                <StepperTrigger>
-                  <StepperIndicator />
-                </StepperTrigger>
-                <StepperSeparator />
-              </StepperItem>
-            ))}
-          </StepperList>
-        </Stepper>
+        <div className="space-y-2">
+          <Progress value={parcelProgressMap[status ?? 0]} />
+
+          <div className="flex items-center justify-between gap-8">
+            {['Booked', 'Assigned', 'Picked Up', 'In Transit', 'Delivered'].map(
+              (item, i) => (
+                <div className="text-xs font-medium" key={i}>
+                  {item}
+                </div>
+              ),
+            )}
+          </div>
+        </div>
       </CardContent>
       <CardFooter>
         <Item>
@@ -112,7 +90,7 @@ const ParcelStatus: React.FC<ParcelStatusProps> = ({
           <ItemFooter>
             <span className="inline-flex items-center gap-2 text-muted-foreground">
               <Clock className="size-4" />
-              Estimated delivery: Dec 28, 2023
+              <p>Estimated delivery: {estimatedDelivery.toDateString()}</p>
             </span>
           </ItemFooter>
         </Item>

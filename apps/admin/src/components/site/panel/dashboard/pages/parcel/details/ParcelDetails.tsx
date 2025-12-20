@@ -31,7 +31,9 @@ const ParcelDetails = () => {
                 updatedAt={parcel?.updatedAt}
               />
               <ParcelLiveTrackingMap
-                agentId={data?.data?.parcel?.assignedAgent?._id}
+                agentId={parcel?.assignedAgent?._id}
+                customer={parcel?.customer}
+                deliveryAddress={parcel?.deliveryAddress}
               />
               <ParcelAddressDetails
                 deliveryAddress={parcel?.deliveryAddress}

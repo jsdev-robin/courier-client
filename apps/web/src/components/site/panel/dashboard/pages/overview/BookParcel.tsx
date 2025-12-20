@@ -69,7 +69,10 @@ const BookParcel = () => {
   async function onSubmit(data: z.infer<typeof parcelSchema.create>) {
     await toast.promise(createParcel(data).unwrap(), {
       loading: 'Creating product...',
-      success: (res) => res.message || DEFAULT_SUCCESS_MESSAGE,
+      success: (res) => {
+        form.reset();
+        return res.message || DEFAULT_SUCCESS_MESSAGE;
+      },
       error: (err) => err.data?.message || DEFAULT_SERVER_ERROR_MESSAGE,
     });
   }

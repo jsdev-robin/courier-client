@@ -16,7 +16,7 @@ const OverviewStats = () => {
   const metrics = data?.data.metrics;
 
   return (
-    <div className="grid gap-4 grid-cols-6">
+    <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
       <Card className="gap-0">
         <CardHeader>
           <CardDescription>Total Parcels</CardDescription>
